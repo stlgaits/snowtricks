@@ -1,5 +1,7 @@
 # SnowTricks
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a1e9427639b146e8a0f82186a19859d1)](https://app.codacy.com/gh/EstelleMyddleware/snowtricks?utm_source=github.com&utm_medium=referral&utm_content=EstelleMyddleware/snowtricks&utm_campaign=Badge_Grade_Settings)
+
 Symfony blog project. Full documentation for the project is available [here](https://estellemyddleware.github.io/snowtricks/)
 
 ## Getting Started
