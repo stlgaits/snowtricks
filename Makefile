@@ -50,4 +50,4 @@ sf: ## List all Symfony commands or pass the parameter "c=" to run a given comma
 	@$(SYMFONY) $(c)
 
 cc: c=c:c ## Clear the cache
-cc: sf
+cc: sf 
