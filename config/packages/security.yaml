@@ -26,6 +26,9 @@ security:
                 enable_csrf: true
             login_throttling:
                 max_attempts: 3
+            logout:
+                path: app_logout
+
 
 
             # activate different ways to authenticate
