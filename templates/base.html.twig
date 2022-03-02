@@ -13,7 +13,30 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
+    <body class="h-100">
+        <nav  class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand">Snowtricks</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a href="" class="navbar-link">Home</a>
+                        <a href="" class="navbar-link">Tricks</a>
+                        <a href="" class="navbar-link">Sign in</a>
+                        <a href="" class="navbar-link">Sign up</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <main class="flex-shrink-0">
         {% block body %}{% endblock %}
+        </main>
+        <footer class="mt-auto py-3 bg-dark">
+            <div class="container">
+                <p class="text-muted">Copyright - {{ "now"|date("Y") }}</p>
+            </div>
+        </footer>
     </body>
 </html>

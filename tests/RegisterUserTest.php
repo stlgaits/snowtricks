@@ -25,4 +25,39 @@ class RegisterUserTest extends WebTestCase
         $this->assertSelectorTextContains('label', 'Username');
         $this->assertSelectorTextContains('label', 'Password');
     }
+
+    public function testUserCannotRegisterWithExistingEmail()
+    {
+
+    }
+    
+    public function testUserCannotRegisterWithExistingUsername()
+    {
+        // TODO: take into account the displaying of a message (and not an Exception page)
+    }
+
+    public function testPasswordMatchesRequirements()
+    {
+
+    }
+
+    public function testUserIsRedirectedToHomepage()
+    {
+
+    }
+
+    public function testUserIsNotLoggedInAutomatically()
+    {
+
+    }
+
+    public function testVerificationEmailIsSent()
+    {
+
+    }
+
+    public function testVerificationTokenActivatesUserAccount()
+    {
+        
+    }
 }
