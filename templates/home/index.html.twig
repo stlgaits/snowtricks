@@ -3,6 +3,15 @@
 {% block title %}Snowtricks - Homepage{% endblock %}
 
 {% block body %}
-<img id="background" src="{{ asset('build/images/background.jpg') }}" alt="Snowboard!" class="w-100"/>
+<section class="jumbotron jumbotron-fluid vh-50"  style="background-image: url({{ absolute_url(asset('build/images/background.jpg')) }});">
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                <h1 class="display-6 text-white">SnowTricks</h1>
+                <p class="lead text-white">Partageons nos tricks !</p>
+            </div>
+        </div>
+    </div>
+</section>
 {{ render(path('app_trick_index', {max: 10})) }}
 {% endblock %}
