@@ -83,6 +83,9 @@
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
+    "lorenzo/pinky": {
+        "version": "1.0.5"
+    },
     "monolog/monolog": {
         "version": "2.3.5"
     },
@@ -344,6 +347,18 @@
     "symfony/intl": {
         "version": "v6.0.3"
     },
+    "symfony/lock": {
+        "version": "6.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.2",
+            "ref": "a1c8800e40ae735206bb14586fdd6c4630a51b8d"
+        },
+        "files": [
+            "config/packages/lock.yaml"
+        ]
+    },
     "symfony/mailer": {
         "version": "6.0",
         "recipe": {
@@ -456,6 +471,9 @@
         "version": "v6.0.3"
     },
     "symfony/proxy-manager-bridge": {
+        "version": "v6.0.3"
+    },
+    "symfony/rate-limiter": {
         "version": "v6.0.3"
     },
     "symfony/routing": {
@@ -613,7 +631,19 @@
     "theseer/tokenizer": {
         "version": "1.2.1"
     },
+    "tijsverkoyen/css-to-inline-styles": {
+        "version": "2.2.4"
+    },
+    "twig/cssinliner-extra": {
+        "version": "v3.3.5"
+    },
     "twig/extra-bundle": {
+        "version": "v3.3.8"
+    },
+    "twig/inky-extra": {
+        "version": "v3.3.5"
+    },
+    "twig/markdown-extra": {
         "version": "v3.3.8"
     },
     "twig/twig": {
