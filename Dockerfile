@@ -46,6 +46,7 @@ RUN set -eux; \
 		zlib-dev \
 		libxslt-dev \
         libgcrypt-dev \
+		wget \
 	; \
 	\
 	docker-php-ext-configure zip; \
