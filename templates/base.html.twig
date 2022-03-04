@@ -8,10 +8,6 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
     </head>
     <body class="h-100">
         <nav  class="navbar navbar-expand-lg navbar-light bg-light">
@@ -38,5 +34,8 @@
                 <p class="text-muted">Copyright - {{ "now"|date("Y") }}</p>
             </div>
         </footer>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </body>
 </html>
