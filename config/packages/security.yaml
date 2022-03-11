@@ -29,8 +29,7 @@ security:
             login_throttling:
                 max_attempts: 3
             logout:
-                path: app_logout
-
+                path: logout
 
 
             # activate different ways to authenticate

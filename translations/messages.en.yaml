@@ -4,6 +4,7 @@ home: Home
 trick : Trick
 tricks : Tricks
 login: Login
+logout: Logout
 password: Password
 forgot_password: Forgot password
 register: Register
