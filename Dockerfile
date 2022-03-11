@@ -12,11 +12,12 @@ ARG NODE_VERSION=17
 FROM node:${NODE_VERSION}-alpine AS symfony_node
 WORKDIR /srv/app
 COPY package*.json ./
-RUN npm install
 ## If you are building your code for production
 # RUN npm ci --only=production
 COPY . .
+RUN npm install
 RUN npm run build
+RUN yarn install && yarn build 
 
 # "php" stage
 FROM php:${PHP_VERSION}-fpm-alpine AS symfony_php
