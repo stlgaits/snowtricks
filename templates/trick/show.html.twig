@@ -1,38 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Trick{% endblock %}
+{% block title %}{{ 'trick' | trans }}{% endblock %}
 
 {% block body %}
-    <h1>Trick</h1>
+    <section class="container-fluid">
+        <h1>{{ 'trick' | trans }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ trick.id }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'name' | trans }}</th>
-                <td>{{ trick.name }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'description' | trans }}</th>
-                <td>{{ trick.description }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'created_at' | trans }}</th>
-                <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'udpated_at' | trans }}</th>
-                <td>{{ trick.updatedAt ? trick.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ trick.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'name' | trans }}</th>
+                    <td>{{ trick.name }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'description' | trans }}</th>
+                    <td>{{ trick.description }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'created_at' | trans }}</th>
+                    <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'updated_at' | trans }}</th>
+                    <td>{{ trick.updatedAt ? trick.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_trick_index') }}">{{ 'back_to_list' | trans }}</a>
+        <a href="{{ path('app_trick_index') }}">{{ 'back_to_list' | trans }}</a>
 
-    <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">{{ 'edit' | trans }}</a>
+        <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">{{ 'edit' | trans }}</a>
 
-    {{ include('trick/_delete_form.html.twig') }}
+        {{ include('trick/_delete_form.html.twig') }}
+    </section>
 {% endblock %}
