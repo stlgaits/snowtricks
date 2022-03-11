@@ -1,0 +1,33 @@
+app_name: SnowTricks
+welcome: Welcome
+home: Home
+trick : Trick
+tricks : Tricks
+login: Login
+password: Password
+forgot_password: Forgot password
+register: Register
+registration: Registration
+create_account: Create an account
+account_already: Already have an account
+lead: Let's share our tricks !
+name: Name
+description: Description
+created_at: Created at
+updated_at: Updated at
+actions: Actions
+create_new: Create new
+empty: No records found
+back_to_list: Back to list
+delete: Delete
+save: Save
+show: Show
+edit: Edit
+username: Username
+email: Email
+email_verification:
+  hello: Hi! Please confirm your email!
+  click_link: Please confirm your email address by clicking the following link 
+  confirm_email: Confirm my Email
+  link_expires: This link will expire in
+  cheers: Cheers!
