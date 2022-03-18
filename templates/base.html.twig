@@ -10,6 +10,7 @@
         <link rel="manifest" href="/site.webmanifest">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
         {% endblock %}
     </head>
     <body class="h-100">
@@ -38,9 +39,12 @@
         <main class="flex-shrink-0">
         {% block body %}{% endblock %}
         </main>
-        <footer class="mt-auto py-3 bg-dark">
+        <footer class="mt-auto py-3 bg-dark blog-footer">
             <div class="container">
                 <p class="text-muted">Copyright - {{ "now"|date("Y") }}</p>
+                <p>
+                    <a href="#">Back to top</a>
+                </p>
             </div>
         </footer>
         {% block javascripts %}
