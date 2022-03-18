@@ -1,35 +1,40 @@
-{% block title %}<h1>{{ 'tricks' | trans }}</h1>{% endblock %}
+{% block title %}<h2 class="display-5 text-center my-5">{{ 'tricks' | trans }}</h2>{% endblock %}
 {% block body %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>{{ 'name' | trans }}</th>
-                <th>{{ 'description' | trans }}</th>
-                <th>{{ 'created_at' | trans }}</th>
-                <th>{{ 'updated_at' | trans }}</th>
-                <th>{{ 'actions' | trans }}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for trick in tricks %}
-            <tr>
-                <td>{{ trick.id }}</td>
-                <td>{{ trick.name }}</td>
-                <td>{{ trick.description }}</td>
-                <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ trick.updatedAt ? trick.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_trick_show', {'id': trick.id}) }}">{{ 'show' | trans }}</a>
-                    <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">{{ 'edit' | trans }}</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">{{ 'empty' | trans }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a href="{{ path('app_trick_new') }}">{{ 'create_new' | trans }}</a>
+    <section id="tricks" class="container">
+        <div class="row">
+            {% for trick in tricks %}
+                <div class="col-lg-4 mb-5">
+                    <div class="card shadow">
+                        <img src="https://picsum.photos/seed/picsum/200" class="card-img-top" alt="Placeholder img">
+                        <div class="card-body">
+                            <div class="row text-center justify-content-around">
+                                <div class="col">
+                                    <a href="{{ path('app_trick_show', {'id': trick.id}) }}" class="card-link text-decoration-none display-6 fw-bold flex">{{ trick.name }}</a>
+                                </div>
+                                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                    <div class="col">
+                                        <div class="row justify-content-end align-items-baseline">
+                                            <div class="col">
+                                                <a href="{{ path('app_trick_edit', {'id': trick.id}) }}" class="card-link text-decoration-none btn btn-light btn-block" role="button"><i class="bi bi-pencil-fill"></i></a>
+                                            </div>
+                                            <div class="col">
+                                                {{ include('trick/_delete_form.html.twig') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-center">{{ 'empty' | trans }}</p>
+            {% endfor %}
+        </div>
+    </section>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <section class="text-center">
+            <a href="{{ path('app_trick_new') }}" role="button" class="btn btn-primary">{{ 'create_new' | trans }}</a>
+        </section>
+    {% endif %}
 {% endblock %}
