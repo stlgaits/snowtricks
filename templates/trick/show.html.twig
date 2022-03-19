@@ -92,17 +92,16 @@
 			<div class="row">
 				<div class="col-md-8">
 					<h3 class="pb-4 mb-4 font-italic border-bottom">
-						From the Firehose
+						#{{ trick.id }}
 					</h3>
 
 					<div class="blog-post">
-						<h2 class="blog-post-title">Sample blog post</h2>
-						<p class="blog-post-meta">January 1, 2014 by
+						<h2 class="blog-post-title">{{ trick.name }}</h2>
+						<p class="blog-post-meta">{{ trick.updatedAt ? trick.updatedAt|date('Y-m-d H:i:s') : '' }} by
 							<a href="#">Mark</a>
 						</p>
 
-						<p>This blog post shows a few different types of content that’s supported and styled with Bootstrap.
-																					                            Basic typography, images, and code are all supported.</p>
+						<p>{{ trick.description }}</p>
 						<hr>
 						<p>Cum sociis natoque penatibus et magnis
 							<a href="#">dis parturient montes</a>, nascetur ridiculus
