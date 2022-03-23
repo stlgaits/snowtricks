@@ -14,8 +14,8 @@ WORKDIR /srv/app
 COPY package*.json ./
 ## If you are building your code for production
 # RUN npm ci --only=production
-COPY . .
 RUN npm install
+COPY . .
 RUN npm run build
 RUN yarn install && yarn build 
 

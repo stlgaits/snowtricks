@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{{ 'welcome' | trans }} !{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="{{absolute_url(asset('build/images/favicon_io/favicon.ico'))}}">
         <link rel="apple-touch-icon" sizes="180x180" href="{{absolute_url(asset('build/images/favicon_io/apple-touch-icon.png'))}}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{absolute_url(asset('build/images/favicon_io/favicon-32x32.png'))}}">
@@ -10,10 +10,11 @@
         <link rel="manifest" href="/site.webmanifest">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
         {% endblock %}
     </head>
     <body class="h-100">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ path('app_home') }}">
                     <img src="{{ asset('build/images/Logo_SnowTricks_03.png') }}" alt="Snowtricks logo" class="w-25">
@@ -23,10 +24,14 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a href="{{ path('app_home') }}" class="navbar-link text-decoration-none me-3">Accueil</a></li>
-                        <li class="nav-item"><a href="{{ path('app_home') }}" class="navbar-link text-decoration-none me-3">Figures</a></li>
-                        <li class="nav-item"><a href="{{ path('app_login') }}" class="navbar-link text-decoration-none me-3">Connexion</a></li>
-                        <li class="nav-item"><a href="{{ path('app_register') }}" class="navbar-link text-decoration-none me-3">Inscription</a></li>
+                        <li class="nav-item"><a href="{{ path('app_home') }}" class="navbar-link text-black fw-bold text-decoration-none me-3">{{ 'home' | trans }}</a></li>
+                        <li class="nav-item"><a href="#tricks" class="navbar-link text-black text-decoration-none me-3">{{ 'tricks' | trans }}</a></li>
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <li class="nav-item"><a class="navbar-link text-black text-decoration-none me-3" href="{{ path('logout') }}">{{ 'logout' | trans }}</a></li>
+                        {% else %}
+                            <li class="nav-item"><a href="{{ path('app_login') }}" class="navbar-link text-black text-decoration-none me-3">{{ 'login' | trans }}</a></li>
+                            <li class="nav-item"><a href="{{ path('app_register') }}" class="navbar-link text-black text-decoration-none me-3">{{ 'register' | trans }}</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -34,9 +39,12 @@
         <main class="flex-shrink-0">
         {% block body %}{% endblock %}
         </main>
-        <footer class="mt-auto py-3 bg-dark">
+        <footer class="mt-auto py-3 bg-dark blog-footer">
             <div class="container">
                 <p class="text-muted">Copyright - {{ "now"|date("Y") }}</p>
+                <p>
+                    <a href="#">Back to top</a>
+                </p>
             </div>
         </footer>
         {% block javascripts %}

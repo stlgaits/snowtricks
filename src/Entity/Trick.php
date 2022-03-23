@@ -8,6 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 class Trick
 {
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable('now');
+        $this->updatedAt = new \DateTimeImmutable('now');
+    }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
