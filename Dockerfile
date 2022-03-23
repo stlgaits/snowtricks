@@ -12,11 +12,12 @@ ARG NODE_VERSION=17
 FROM node:${NODE_VERSION}-alpine AS symfony_node
 WORKDIR /srv/app
 COPY package*.json ./
-RUN npm install
 ## If you are building your code for production
 # RUN npm ci --only=production
+RUN npm install
 COPY . .
 RUN npm run build
+RUN yarn install && yarn build 
 
 # "php" stage
 FROM php:${PHP_VERSION}-fpm-alpine AS symfony_php
@@ -30,6 +31,7 @@ RUN apk add --no-cache \
 		git \
 		gnu-libiconv \
 		make \
+		nano \
 	;
 
 # install gnu-libiconv and set LD_PRELOAD env to make iconv work fully on Alpine image.
@@ -43,12 +45,16 @@ RUN set -eux; \
 		icu-dev \
 		libzip-dev \
 		zlib-dev \
+		libxslt-dev \
+        libgcrypt-dev \
+		wget \
 	; \
 	\
 	docker-php-ext-configure zip; \
 	docker-php-ext-install -j$(nproc) \
 		intl \
 		zip \
+		xsl \
 	; \
 	pecl install \
 		apcu-${APCU_VERSION} \
@@ -57,6 +63,7 @@ RUN set -eux; \
 	docker-php-ext-enable \
 		apcu \
 		opcache \
+		xsl\
 	; \
 	\
 	runDeps="$( \

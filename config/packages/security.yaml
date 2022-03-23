@@ -12,7 +12,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: email
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -20,6 +20,17 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
+                default_target_path: app_home
+                # failure_path: app_login
+            login_throttling:
+                max_attempts: 3
+            logout:
+                path: logout
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

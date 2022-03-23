@@ -1,0 +1,23 @@
+// customize some Bootstrap variables
+$primary: darken(#428bca, 20%);
+$enable-negative-margins: true;
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap-utilities.scss";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/utilities";
+
+$utilities: map-merge(
+    $utilities,
+    (
+        "viewport-height": (
+            property: height,
+            class: vh,
+            values: (100: 100vh, 90: 90vh, 75: 75vh, 50: 50vh, 25: 25vh)
+        ),
+    )
+);
+
+@import "~bootstrap/scss/bootstrap.scss";
