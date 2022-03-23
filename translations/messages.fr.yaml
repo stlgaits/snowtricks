@@ -1,0 +1,34 @@
+app_name: SnowTricks
+welcome: Bienvenue
+home: Accueil
+trick : Figure
+tricks : Figures
+login: Connexion
+logout: Déconnexion
+password: Mot de passe
+forgot_password: Mot de passe oublié
+register: S'inscrire
+registration: Inscription
+create_account: Créer un compte
+account_already: Vous avez déjà un compte
+lead: Partageons nos figures !
+name: Nom
+description: Description
+created_at: Créé à
+updated_at: Mis à jour à
+actions: Actions
+create_new: Ajouter
+empty: Aucun enregistrement trouvé
+back_to_list: Retour à la liste
+delete: Supprimer
+save: Enregistrer
+show: Voir
+edit: Editer
+username: Pseudo
+email: Adresse email
+email_verification:
+  hello: Bonjour! Veuillez confirmer votre adresse email!
+  click_link: Veuillez confirmer votre adresse email en cliquant sur le lien suivant
+  confirm_email: Confirmer mon email
+  link_expires: Ce lien expirera dans
+  cheers: Merci!

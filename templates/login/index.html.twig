@@ -10,20 +10,20 @@
                 <form action="{{ path('app_login') }}" method="post" class="card">
                     <div class="card-body">
                         <div class="mb-2">
-                            <label for="username">Username:</label>
+                            <label for="username">{{ 'username' | trans }}:</label>
                             <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"/>
                         </div>
                         <div class="mb-2">
-                            <label for="password">Password:</label>
+                            <label for="password">{{ 'password' | trans }}:</label>
                             <input class="form-control" type="password" id="password" name="_password"/>
                         </div>
                         <div class="mb-2">
-                            <a href="">Forgot password?</a>
+                            <a href="">{{ 'forgot_password' | trans }}?</a>
                         </div>
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                         {# If you want to control the URL the user is redirected to on success #}
                         <input type="hidden" name="_target_path" value="{{ path('app_home') }}"/> 
-                        <button class="btn btn-primary" type="submit">Login</button>
+                        <button class="btn btn-primary" type="submit">{{ 'login' | trans }}</button>
                     </div>
                 </form>
             </div>

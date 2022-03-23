@@ -1,35 +1,49 @@
-{% block title %}<h1>Trick index</h1>{% endblock %}
+{% block title %}<h2 class="display-5 text-center my-5">{{ 'tricks' | trans }}</h2>{% endblock %}
 {% block body %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Created at</th>
-                <th>Updated at</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for trick in tricks %}
-            <tr>
-                <td>{{ trick.id }}</td>
-                <td>{{ trick.name }}</td>
-                <td>{{ trick.description }}</td>
-                <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ trick.updatedAt ? trick.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_trick_show', {'id': trick.id}) }}">show</a>
-                    <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a href="{{ path('app_trick_new') }}">Create new</a>
+    <section id="tricks" class="container">
+        <div class="row">
+            {% for trick in tricks %}
+                <div class="col-lg-4 mb-5">
+                    <div class="card shadow">
+                        <img src="https://picsum.photos/seed/picsum/200" class="card-img-top" alt="Placeholder img">
+                        <div class="card-body">
+                            <div class="row text-center justify-content-around">
+                                <div class="col">
+                                    <a href="{{ path('app_trick_show', {'id': trick.id}) }}" class="card-link text-decoration-none display-6 fw-bold flex">{{ trick.name }}</a>
+                                </div>
+                                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                    <div class="col">
+                                        <div class="row justify-content-end align-items-baseline">
+                                            <div class="col">
+                                                <a href="{{ path('app_trick_edit', {'id': trick.id}) }}" class="card-link text-decoration-none btn btn-light btn-block" role="button"><i class="bi bi-pencil-fill"></i></a>
+                                            </div>
+                                            <div class="col">
+                                                {{ include('trick/_delete_form.html.twig') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-center">{{ 'empty' | trans }}</p>
+            {% endfor %}
+        </div>
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <div class="text-center mb-5">
+                <a href="{{ path('app_trick_new') }}" role="button" class="btn btn-primary">{{ 'create_new' | trans }}</a>
+            </div>
+        {% endif %}
+        <div class="row position-fixed bottom-0 end-0 pe-2 pb-2 mt-2">
+            <div class="col mb-2">
+                <a href="#tricks" class="link-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
+                    <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
 {% endblock %}

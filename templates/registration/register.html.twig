@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{{ 'register' | trans }}{% endblock %}
 
 {% block body %}
     <div class="container-fluid">
@@ -10,7 +10,7 @@
                 <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
             {% endfor %}
 
-            <h1>Registration</h1>
+            <h1>{{ 'registration' | trans }}</h1>
 
             {{ form_start(registrationForm) }}
                 {{ form_row(registrationForm.username) }}
@@ -18,9 +18,9 @@
                 {{ form_row(registrationForm.plainPassword, {
                     label: 'Password'
                 }) }}
-                <button type="submit" class="btn btn-primary">Create an account</button>
+                <button type="submit" class="btn btn-primary">{{ 'create_account' | trans }}</button>
             {{ form_end(registrationForm) }}
-                <a href="{{path('app_login')}}">Already have an account?</a> 
+                <a href="{{path('app_login')}}">{{ 'account_already' | trans }}?</a> 
             </div>
         </div>
     </div>
