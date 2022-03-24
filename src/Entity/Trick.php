@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TrickRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
@@ -12,6 +14,7 @@ class Trick
     {
         $this->createdAt = new \DateTimeImmutable('now');
         $this->updatedAt = new \DateTimeImmutable('now');
+        $this->categories = new ArrayCollection();
     }
 
     #[ORM\Id]
@@ -30,6 +33,9 @@ class Trick
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $updatedAt;
+
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'tricks')]
+    private $categories;
 
     public function getId(): ?int
     {
@@ -80,6 +86,33 @@ class Trick
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->addTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removeTrick($this);
+        }
 
         return $this;
     }
