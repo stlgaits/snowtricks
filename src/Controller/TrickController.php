@@ -5,10 +5,10 @@ namespace App\Controller;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/trick')]
 class TrickController extends AbstractController
@@ -42,8 +42,12 @@ class TrickController extends AbstractController
     #[Route('/{id}', name: 'app_trick_show', methods: ['GET'])]
     public function show(Trick $trick): Response
     {
+        $categories = $trick->getCategories();
+        $comments = $trick->getComments();
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'categories' => $categories,
+            'comments' => $comments,
         ]);
     }
 

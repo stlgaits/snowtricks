@@ -32,3 +32,6 @@ email_verification:
   confirm_email: Confirm my Email
   link_expires: This link will expire in
   cheers: Cheers!
+leave_comment: Leave a comment
+no_comment: No comments on this trick yet
+category: Category

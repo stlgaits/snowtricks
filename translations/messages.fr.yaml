@@ -32,3 +32,6 @@ email_verification:
   confirm_email: Confirmer mon email
   link_expires: Ce lien expirera dans
   cheers: Merci!
+leave_comment: Laisser un commentaire
+no_comment: Aucun commentaire pour le moment
+category: Catégorie
