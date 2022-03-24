@@ -23,6 +23,10 @@ class Comment
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 
+    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $trick;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +64,18 @@ class Comment
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getTrick(): ?Trick
+    {
+        return $this->trick;
+    }
+
+    public function setTrick(?Trick $trick): self
+    {
+        $this->trick = $trick;
 
         return $this;
     }

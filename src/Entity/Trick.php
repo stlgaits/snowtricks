@@ -15,6 +15,7 @@ class Trick
         $this->createdAt = new \DateTimeImmutable('now');
         $this->updatedAt = new \DateTimeImmutable('now');
         $this->categories = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     #[ORM\Id]
@@ -36,6 +37,9 @@ class Trick
 
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'tricks')]
     private $categories;
+
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
+    private $comments;
 
     public function getId(): ?int
     {
@@ -112,6 +116,36 @@ class Trick
     {
         if ($this->categories->removeElement($category)) {
             $category->removeTrick($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getTrick() === $this) {
+                $comment->setTrick(null);
+            }
         }
 
         return $this;

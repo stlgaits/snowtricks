@@ -74,8 +74,8 @@
 							<a href="#">Mark</a>
 						</p>
 						<p>{{ trick.description }}</p>
-						{% for category in categories %}
-							<span class="badge badge-info">{{trick.categories}}</span>
+						{% for key, category in categories %}
+							<span class="badge badge-info">{{category.name}}</span>
 						{% else %}
 							<span class="badge badge-light">No group</span>
 						{% endfor %}
@@ -83,5 +83,35 @@
 				</div>
 			</div>
 		</main>
+		<section class="container-fluid">
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<form method="POST" action="app_comment_new">
+							<div class="form-group">
+								<label for="leave_comment_textarea">{{'leave_comment'|trans}}</label>
+								<textarea class="form-control" id="leave_comment_textarea" rows="3"></textarea>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					{% for comment in comments %}
+						<div class="card" style="width:18rem;">
+							<img src="https://images.unsplash.com/photo-1561154464-82e9adf32764?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title">{{comment.author}}</h5>
+								<h6 class="card-subtitle mb-2 text-muted ">{{comment.createdAt}}</h6>
+								<p class="card-text">{{comment.message}}</p>
+							</div>
+						</div>
+					{% else %}
+					<p class="text-muted">{{ 'no_comment' | trans }}</p>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
 	</section>
 {% endblock %}
