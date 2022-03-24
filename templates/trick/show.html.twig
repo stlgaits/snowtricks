@@ -74,6 +74,11 @@
 							<a href="#">Mark</a>
 						</p>
 						<p>{{ trick.description }}</p>
+						{% for category in categories %}
+							<span class="badge badge-info">{{trick.categories}}</span>
+						{% else %}
+							<span class="badge badge-light">No group</span>
+						{% endfor %}
 					</div>
 				</div>
 			</div>
