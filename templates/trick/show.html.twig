@@ -17,7 +17,7 @@
 					{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 						<div class="col justify-content-end d-flex gap-3">
 							<div>
-								<a class="text-decoration-none btn btn-outline-light text-black display-4" href="{{ path('app_trick_edit', {'id': trick.id}) }}">
+								<a class="text-decoration-none btn btn-outline-light text-black display-4" href="{{ path('app_trick_edit', {'slug': trick.slug}) }}">
 									<i class="bi bi-pencil-fill"></i>
 								</a>
 							</div>
@@ -30,7 +30,6 @@
 				<div class="row justify-content-center">
 					<div class="col-md-6 px-0 text-center">
 						<h1 class="display-1 font-italic">{{ trick.name }}</h1>
-						<p class="lead my-3">{{ trick.description }}</p>
 					</div>
 				</div>
 			</div>
@@ -64,51 +63,49 @@
 		</section>
 		<main class="container">
 			<div class="row justify-content-center">
-				<div class="col-md-8">
+				<div class="col">
 					<h3 class="pb-4 mb-4 font-italic border-bottom">
 						#{{ trick.id }}
 					</h3>
 					<div class="blog-post">
 						<h2 class="blog-post-title">{{ trick.name }}</h2>
-						<p class="blog-post-meta">{{ trick.updatedAt ? trick.updatedAt|date('d/m/Y H:i:s') : '' }} by
+						<p class="blog-post-meta">{{ trick.updatedAt ? trick.updatedAt|date('d/m/Y H:i:s') : '' }} {{'by' | trans }}
 							<a href="#">Mark</a>
 						</p>
 						<p>{{ trick.description }}</p>
 						{% for key, category in categories %}
-							<span class="badge badge-info">{{category.name}}</span>
+							<span class="badge bg-info rounded-pill">{{category.name}}</span>
 						{% else %}
-							<span class="badge badge-light">No group</span>
+							<span class="badge bg-light text-dark rounded-pill ">{{ 'no_category' | trans }}</span>
 						{% endfor %}
 					</div>
 				</div>
 			</div>
 		</main>
-		<section class="container-fluid">
-			<div class="row">
-				<div class="col">
-					<div class="card">
-						<form method="POST" action="app_comment_new">
-							<div class="form-group">
-								<label for="leave_comment_textarea">{{'leave_comment'|trans}}</label>
-								<textarea class="form-control" id="leave_comment_textarea" rows="3"></textarea>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col">
+		<section class="mb-5 container">
+			<div class="card bg-light shadow-sm">
+				<div class="card-body">
+					{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+						{{ render(path('app_comment_new', {'trick' : trick.id})) }}
+					{% else %}
+						<div class="text-center mt-4">
+							<h4 class="card-title">{{ 'comments' | trans }}</h4>
+							<p class="text-muted">{{ 'must_login' | trans }}</p>
+							<a href="{{ path('app_login')}}" role="button" class="btn btn-secondary">{{'login' | trans }}</a>
+						</div>
+					{% endif %}
 					{% for comment in comments %}
-						<div class="card" style="width:18rem;">
-							<img src="https://images.unsplash.com/photo-1561154464-82e9adf32764?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">{{comment.author}}</h5>
-								<h6 class="card-subtitle mb-2 text-muted ">{{comment.createdAt}}</h6>
-								<p class="card-text">{{comment.message}}</p>
+						<div class="d-flex">
+							<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+							<div class="ms-3">
+								<div class="fw-bold"><p>{{comment.author}}</p><span>{{comment.createdAt}}</span></div>
+								{{comment.message}}
 							</div>
 						</div>
 					{% else %}
-					<p class="text-muted">{{ 'no_comment' | trans }}</p>
+						<div class="d-flex mt-4 justify-content-center">
+							<p class="text-muted">{{ 'no_comment' | trans }}</p>
+						</div>
 					{% endfor %}
 				</div>
 			</div>

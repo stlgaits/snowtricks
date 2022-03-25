@@ -4,6 +4,7 @@ home: Accueil
 trick : Figure
 tricks : Figures
 login: Connexion
+must_login: Connectez-vous à votre compte afin de laisser un commentaire
 logout: Déconnexion
 password: Mot de passe
 forgot_password: Mot de passe oublié
@@ -13,6 +14,7 @@ create_account: Créer un compte
 account_already: Vous avez déjà un compte
 lead: Partageons nos figures !
 name: Nom
+by: par
 description: Description
 created_at: Créé à
 updated_at: Mis à jour à
@@ -24,6 +26,7 @@ delete: Supprimer
 save: Enregistrer
 show: Voir
 edit: Editer
+submit: Envoyer
 username: Pseudo
 email: Adresse email
 email_verification:
@@ -34,4 +37,6 @@ email_verification:
   cheers: Merci!
 leave_comment: Laisser un commentaire
 no_comment: Aucun commentaire pour le moment
+comments: Commentaires
 category: Catégorie
+no_category: Pas de groupe

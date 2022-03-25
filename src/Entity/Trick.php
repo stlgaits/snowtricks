@@ -3,13 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\TrickRepository;
+use App\Service\SluggerService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
-class Trick
+#[ORM\HasLifecycleCallbacks()]
+class Trick implements \Stringable
 {
+//TODO: TIMESTAMPABLE & SLUGGABLE WITH DOCTRINEEXTENSION???
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable('now');
@@ -40,6 +43,9 @@ class Trick
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
     private $comments;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $slug;
 
     public function getId(): ?int
     {
@@ -149,5 +155,29 @@ class Trick
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->sluggerService->slugify($slug);
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
     }
 }
