@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/trick')]
+#[Route('/tricks')]
 class TrickController extends AbstractController
 {
     #[Route('/', name: 'app_trick_index', methods: ['GET'])]
@@ -42,7 +42,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'app_trick_show', methods: ['GET'])]
+    #[Route('/details/{slug}', name: 'app_trick_show', methods: ['GET'])]
     public function show(Trick $trick): Response
     {
         $categories = $trick->getCategories();
