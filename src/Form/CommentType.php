@@ -13,8 +13,6 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('message')
-            ->add('createdAt')
-            ->add('author')
         ;
     }
 

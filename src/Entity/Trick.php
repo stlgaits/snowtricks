@@ -3,19 +3,24 @@
 namespace App\Entity;
 
 use App\Repository\TrickRepository;
+use App\Service\SluggerService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
-class Trick
+#[ORM\HasLifecycleCallbacks()]
+class Trick implements \Stringable
 {
+//TODO: TIMESTAMPABLE & SLUGGABLE WITH DOCTRINEEXTENSION???
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable('now');
         $this->updatedAt = new \DateTimeImmutable('now');
         $this->categories = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->videos = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     #[ORM\Id]
@@ -38,8 +43,17 @@ class Trick
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'tricks')]
     private $categories;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]        
     private $comments;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $slug;
+
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, orphanRemoval: true)]
+    private $videos;
+
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class)]
+    private $images;
 
     public function getId(): ?int
     {
@@ -145,6 +159,90 @@ class Trick
             // set the owning side to null (unless already changed)
             if ($comment->getTrick() === $this) {
                 $comment->setTrick(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->sluggerService->slugify($slug);
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * @return Collection<int, Video>
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->videos->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getTrick() === $this) {
+                $video->setTrick(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Image>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getTrick() === $this) {
+                $image->setTrick(null);
             }
         }
 

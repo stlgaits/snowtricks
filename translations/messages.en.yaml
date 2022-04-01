@@ -4,6 +4,7 @@ home: Home
 trick : Trick
 tricks : Tricks
 login: Login
+must_login: Login to your account to be able to leave a comment
 logout: Logout
 password: Password
 forgot_password: Forgot password
@@ -13,6 +14,7 @@ create_account: Create an account
 account_already: Already have an account
 lead: Let's share our tricks !
 name: Name
+by: by
 description: Description
 created_at: Created at
 updated_at: Updated at
@@ -24,6 +26,7 @@ delete: Delete
 save: Save
 show: Show
 edit: Edit
+submit: Send
 username: Username
 email: Email
 email_verification:
@@ -33,5 +36,7 @@ email_verification:
   link_expires: This link will expire in
   cheers: Cheers!
 leave_comment: Leave a comment
+comments: Comments
 no_comment: No comments on this trick yet
 category: Category
+no_category: Uncategorised

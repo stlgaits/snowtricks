@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-class Category
+class Category implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,6 +23,9 @@ class Category
 
     #[ORM\ManyToMany(targetEntity: Trick::class, inversedBy: 'categories')]
     private $tricks;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $slug;
 
     public function __construct()
     {
@@ -63,6 +69,23 @@ class Category
     public function removeTrick(Trick $trick): self
     {
         $this->tricks->removeElement($trick);
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
