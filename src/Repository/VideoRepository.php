@@ -2,30 +2,30 @@
 
 namespace App\Repository;
 
-use App\Entity\Trick;
+use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Trick|null find($id, $lockMode = null, $lockVersion = null)
- * @method Trick|null findOneBy(array $criteria, array $orderBy = null)
- * @method Trick[]    findAll()
- * @method Trick[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Video|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Video|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Video[]    findAll()
+ * @method Video[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TrickRepository extends ServiceEntityRepository
+class VideoRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Trick::class);
+        parent::__construct($registry, Video::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Trick $entity, bool $flush = true): void
+    public function add(Video $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -37,7 +37,7 @@ class TrickRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Trick $entity, bool $flush = true): void
+    public function remove(Video $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -46,15 +46,15 @@ class TrickRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Trick[] Returns an array of Trick objects
+    //  * @return Video[] Returns an array of Video objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
+            ->orderBy('v.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -63,10 +63,10 @@ class TrickRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Trick
+    public function findOneBySomeField($value): ?Video
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
