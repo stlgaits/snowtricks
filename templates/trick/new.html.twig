@@ -3,9 +3,11 @@
 {% block title %}New Trick{% endblock %}
 
 {% block body %}
-    <section class="container-fluid">
+    <section class="container vh-75">
         <h1>{{ 'create_new' | trans }} {{ 'trick' | trans }}</h1>
         {{ include('trick/_form.html.twig') }}
-        <a href="{{ path('app_home') }}">{{ 'back_to_list' | trans }}</a>
+        <div class="text-center">
+            <a href="{{ path('app_home') }}" role="button" class="btn btn-secondary">{{ 'back_to_list' | trans }}</a>
+        </div>
     </section>
 {% endblock %}
