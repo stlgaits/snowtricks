@@ -1,0 +1,25 @@
+{% block body %}
+    <aside class="text-center">
+        <ul class="medias d-flex justify-content-around"
+            {# data-index="{{ images|length > 0 ? images|last.vars.name + 1 : 0 }}"
+            data-prototype="{{ form_widget(images.vars.prototype)|e('html_attr') }}" #}
+        >
+            {% for image in images %}
+                <li class="list-unstyled">
+                    <img src="{{ image.path }}" alt="trick"/>
+                    <ul class="d-flex  justify-content-evenly bg-secondary">
+                        <li class="list-unstyled">
+                            <a href="{{ path('app_image_show', {'id': image.id}) }}">{{ 'show' | trans }}</a>
+                        </li>
+                        <li class="list-unstyled">
+                            <a href="{{ path('app_image_edit', {'id': image.id}) }}">{{ 'edit' | trans }}</a>
+                        </li>
+                    </ul>
+                </li>
+            {% else %}
+                <li class="list-unstyled">{{ 'empty' | trans }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ path('app_image_new', {'trick' : trick.id}) }}" role="button" class="btn btn-secondary mt-2 add_item_link" data-collection-holder-class="images">{{ 'create_new' | trans }}</a>
+    </aside>
+{% endblock %}

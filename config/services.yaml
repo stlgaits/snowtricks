@@ -24,4 +24,4 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Service\FileUploader:
         arguments:
-            $targetDirectory: '%images_directory%'
+            $targetDirectory: '%kernel.project_dir%/public/uploads/images'

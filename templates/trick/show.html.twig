@@ -43,7 +43,8 @@
 			</div>
 		</div>
 		<section id="media" class="container">
-			<div class="row mb-2">
+				{{ render(path('app_image_index_per_trick', {'trick' : trick.id})) }}
+			{# <div class="row mb-2">
 				<div class="col">
 					<img src="https://picsum.photos/seed/picsum/200/200" class="w-100" />
 				</div>
@@ -59,7 +60,7 @@
 				<div class="col">
 					<img src="https://picsum.photos/seed/picsum/200/200" class="w-100" />
 				</div>
-			</div>
+			</div> #}
 		</section>
 		<main class="container">
 			<div class="row justify-content-center">

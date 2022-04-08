@@ -35,3 +35,7 @@ yarn-error.log
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+###< uploaded trick images ###
+/public/uploads/images/*
+###> uploaded trick images ###
