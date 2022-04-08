@@ -29,9 +29,8 @@ class FileUploader
         try {
             $file->move($this->getTargetDirectory(), $fileName);
         } catch (FileException $e) {
-            // ... handle exception if something happens during file upload
             $this->logger->error($e->getMessage().' '.$e->getFile().' line : '.$e->getLine());
-            throw new FileException('Failed to upload file'.$e->getMessage().' '.$e->getFile().' line : '.$e->getLine());
+            throw new FileException('Failed to upload file : '.$e->getMessage().' on '.$e->getFile().' line : '.$e->getLine());
         }
 
         return $fileName;
