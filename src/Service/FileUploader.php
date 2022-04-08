@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -10,11 +11,13 @@ class FileUploader
 {
     private $targetDirectory;
     private $slugger;
+    private $logger;
 
-    public function __construct($targetDirectory, SluggerInterface $slugger)
+    public function __construct($targetDirectory, SluggerInterface $slugger, LoggerInterface $logger)
     {
         $this->targetDirectory = $targetDirectory;
         $this->slugger = $slugger;
+        $this->logger = $logger;
     }
 
     public function upload(UploadedFile $file)
@@ -27,6 +30,8 @@ class FileUploader
             $file->move($this->getTargetDirectory(), $fileName);
         } catch (FileException $e) {
             // ... handle exception if something happens during file upload
+            $this->logger->error($e->getMessage().' '.$e->getFile().' line : '.$e->getLine());
+            throw new FileException('Failed to upload file'.$e->getMessage().' '.$e->getFile().' line : '.$e->getLine());
         }
 
         return $fileName;

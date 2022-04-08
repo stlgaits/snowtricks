@@ -1,37 +1,16 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Image index{% endblock %}
-
 {% block body %}
-    <h1>Image index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>FileName</th>
-                <th>Path</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <ul class="medias"
+        {# data-index="{{ images|length > 0 ? images|last.vars.name + 1 : 0 }}"
+        data-prototype="{{ form_widget(images.vars.prototype)|e('html_attr') }}" #}
+    >
         {% for image in images %}
-            <tr>
-                <td>{{ image.id }}</td>
-                <td>{{ image.fileName }}</td>
-                <td>{{ image.path }}</td>
-                <td>
-                    <a href="{{ path('app_image_show', {'id': image.id}) }}">show</a>
-                    <a href="{{ path('app_image_edit', {'id': image.id}) }}">edit</a>
-                </td>
-            </tr>
+            <li class="list-unstyled"><img src="{{ image.path }}" alt="trick"/></li>
+            <li class="list-unstyled">{{ image.fileName }}</li>
+            <li class="list-unstyled"><a href="{{ path('app_image_show', {'id': image.id}) }}">{{ 'show' | trans }}</a></li>
+            <li class="list-unstyled"><a href="{{ path('app_image_edit', {'id': image.id}) }}">{{ 'edit' | trans }}</a></li>
         {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
+            <li class="list-unstyled">{{ 'empty' | trans }}</li>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_image_new') }}">Create new</a>
+            <a href="{{ path('app_image_new', {'trick' : trick.id}) }}" role="button" class="btn btn-secondary mt-2 add_item_link" data-collection-holder-class="images">{{ 'create_new' | trans }}</a>
+    </ul>
 {% endblock %}
