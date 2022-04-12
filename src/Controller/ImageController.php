@@ -52,7 +52,7 @@ class ImageController extends AbstractController
             $image->setTrick($trick);
             $image->setPath('/uploads/images/'.$image->getFileName());
             $imageRepository->add($image);
-            return $this->redirectToRoute('app_trick_show', ['slug' => $trick], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('image/new.html.twig', [
@@ -62,38 +62,15 @@ class ImageController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_image_show', methods: ['GET'])]
-    public function show(Image $image): Response
-    {
-        return $this->render('image/show.html.twig', [
-            'image' => $image,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_image_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Image $image, ImageRepository $imageRepository): Response
-    {
-        $form = $this->createForm(ImageType::class, $image);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $imageRepository->add($image);
-            return $this->redirectToRoute('app_image_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('image/edit.html.twig', [
-            'image' => $image,
-            'form' => $form,
-        ]);
-    }
 
     #[Route('/{id}', name: 'app_image_delete', methods: ['POST'])]
     public function delete(Request $request, Image $image, ImageRepository $imageRepository): Response
     {
+        $trick = $image->getTrick();
         if ($this->isCsrfTokenValid('delete'.$image->getId(), $request->request->get('_token'))) {
             $imageRepository->remove($image);
         }
 
-        return $this->redirectToRoute('app_image_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
     }
 }
