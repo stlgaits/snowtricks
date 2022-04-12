@@ -34,33 +34,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="container mb-4">
-			<div class="row text-center">
-				<div class="col">
-				{# TODO: responsive mobile media queries - this button displays the videos & images linked to a trick #}
-					<button class="btn btn-primary">See medias</button>
-				</div>
-			</div>
-		</div>
 		<section id="media" class="container">
 				{{ render(path('app_image_index_per_trick', {'trick' : trick.id})) }}
-			{# <div class="row mb-2">
-				<div class="col">
-					<img src="https://picsum.photos/seed/picsum/200/200" class="w-100" />
-				</div>
-				<div class="col">
-					<img src="https://picsum.photos/id/237/200/200" class="w-100" />
-				</div>
-				<div class="col">
-					<img src="https://picsum.photos/seed/picsum/200/200" class="w-100" />
-				</div>
-				<div class="col">
-					<img src="https://picsum.photos/seed/picsum/200/200" class="w-100" />
-				</div>
-				<div class="col">
-					<img src="https://picsum.photos/seed/picsum/200/200" class="w-100" />
-				</div>
-			</div> #}
 		</section>
 		<main class="container">
 			<div class="row justify-content-center">
