@@ -35,7 +35,8 @@
 			</div>
 		</div>
 		<section id="media" class="container">
-				{{ render(path('app_image_index_per_trick', {'trick' : trick.id})) }}
+			{{ render(path('app_image_index_per_trick', {'trick' : trick.id})) }}
+			{{ render(path('app_video_index_per_trick', {'trick' : trick.id})) }}
 		</section>
 		<main class="container">
 			<div class="row justify-content-center">
