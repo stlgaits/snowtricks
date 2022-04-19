@@ -2,15 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Trick;
 use App\Entity\Comment;
+use App\Entity\Trick;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use DateTimeImmutable;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/comment')]
 class CommentController extends AbstractController
@@ -62,6 +62,7 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentRepository->add($comment);
+
             return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
         }
 

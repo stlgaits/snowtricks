@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\TrickRepository;
-use App\Service\SluggerService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\HasLifecycleCallbacks()]
 class Trick implements \Stringable
 {
-//TODO: TIMESTAMPABLE & SLUGGABLE WITH DOCTRINEEXTENSION???
+    // TODO: TIMESTAMPABLE & SLUGGABLE WITH DOCTRINEEXTENSION???
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable('now');
@@ -43,7 +42,7 @@ class Trick implements \Stringable
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'tricks')]
     private $categories;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]        
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
     private $comments;
 
     #[ORM\Column(type: 'string', length: 255)]
