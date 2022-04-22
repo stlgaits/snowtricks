@@ -2,6 +2,8 @@
 
 namespace App\Service\EmbedVideoLink;
 
+use App\Service\EmbedVideoLink\EmbedUrlTrimmerServiceInterface;
+
 class EmbedYoutubeUrlTrimmerService implements EmbedUrlTrimmerServiceInterface
 {
 

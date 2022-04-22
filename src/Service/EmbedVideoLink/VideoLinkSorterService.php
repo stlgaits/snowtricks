@@ -2,19 +2,20 @@
 
 namespace App\Service\EmbedVideoLink;
 
-use Monolog\Logger;
-use App\Service\EmbedVideoLink\EmbedUrlTrimmerServiceInterface;
+use Psr\Log\LoggerInterface;
+use App\Service\EmbedVideoLink\EmbedYoutubeUrlTrimmerService;
 use App\Service\EmbedVideoLink\EmbedDailymotionUrlTrimmerService;
+use Exception;
 
 class VideoLinkSorterService 
 {
-    private $urlTrimmerService;
     private $logger;
 
-    public function __construct(EmbedUrlTrimmerServiceInterface $urlTrimmerService, Logger $logger)
+    public function __construct(
+        LoggerInterface $logger
+        )
     {
         $this->logger = $logger;
-        $this->urlTrimmerService = $urlTrimmerService;
     }
 
     public function trimUrl(string $link): ?string
@@ -34,7 +35,8 @@ class VideoLinkSorterService
                 break;
             default:
                 $this->logger->error("Unsupported videolink submitted.");
-                throw "Unsupported media platform";
+                // TODO: convert this exception into a flashmessage to the user with redirect
+                throw new Exception("Unsupported media platform");
                 break;
         }
     }

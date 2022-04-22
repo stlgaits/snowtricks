@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\TrickRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Service\SluggerService;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TrickRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
@@ -176,7 +178,6 @@ class Trick implements \Stringable
 
     public function setSlug(string $slug): self
     {
-        $this->sluggerService->slugify($slug);
         $this->slug = $slug;
 
         return $this;

@@ -2,6 +2,8 @@
 
 namespace App\Service\EmbedVideoLink;
 
+use App\Service\EmbedVideoLink\EmbedUrlTrimmerServiceInterface;
+
 class EmbedDailymotionUrlTrimmerService implements EmbedUrlTrimmerServiceInterface
 {
 
