@@ -2,51 +2,39 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-    static targets = ['player'];
-    // 2. This code loads the IFrame Player API code asynchronously.
-    tag = document.createElement('script');
-    connect()
+    static targets = ['field'];
+    count = 0;
+    //TODO: try to adapt this jQuery sample code (from SF Docs) to implement
+    // the ability to add videos (and then images & groups) directly from the
+    // add new trick view
+    add()
     {
-        tag.src = "https://www.youtube.com/iframe_api";
-        firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    } 
-    // 3. This function creates an <iframe> (and YouTube player)
-    //    after the API code downloads.
-    player;
-    onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-            height: '390',
-            width: '640',
-            videoId: 'M7lc1UVf-VE',
-            playerVars: {
-                'playsinline': 1
-            },
-            events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-            }
-        });
+        this.count++;
+        this.fieldTarget.innerText = this.count;
     }
-    
-    // 4. The API will call this function when the video player is ready.
-    onPlayerReady(event) {
-        event.target.playVideo();
-    }
-    
-    // 5. The API calls this function when the player's state changes.
-    //    The function indicates that when playing a video (state=1),
-    //    the player should play for six seconds and then stop.
-    done = false;
-    onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-            setTimeout(stopVideo, 6000);
-            done = true;
-        }
-    }
-    stopVideo() {
-        player.stopVideo();
-    }
+    // add-collection-widget.js
+// jQuery(document).ready(function () {
+//     jQuery('.add-another-collection-widget').click(function (e) {
+//         var list = jQuery(jQuery(this).attr('data-list-selector'));
+//         // Try to find the counter of the list or use the length of the list
+//         var counter = list.data('widget-counter') || list.children().length;
+
+//         // grab the prototype template
+//         var newWidget = list.attr('data-prototype');
+//         // replace the "__name__" used in the id and name of the prototype
+//         // with a number that's unique to your emails
+//         // end name attribute looks like name="contact[emails][2]"
+//         newWidget = newWidget.replace(/__name__/g, counter);
+//         // Increase the counter
+//         counter++;
+//         // And store it, the length cannot be used if deleting widgets is allowed
+//         list.data('widget-counter', counter);
+
+//         // create a new list element and add it to the list
+//         var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+//         newElem.appendTo(list);
+//     });
+// });
 }
 
 
