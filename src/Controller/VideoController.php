@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\EmbedVideoLink\EmbedUrlTrimmerServiceInterface;
+use App\Service\EmbedVideoLink\VideoLinkSorterService;
 
 #[Route('/video')]
 class VideoController extends AbstractController
@@ -32,15 +34,16 @@ class VideoController extends AbstractController
     }
 
     #[Route('/{trick}/new', name: 'app_video_new', methods: ['GET', 'POST'])]
-    public function new(Trick $trick, Request $request, VideoRepository $videoRepository): Response
+    public function new(Trick $trick, Request $request, VideoRepository $videoRepository, VideoLinkSorterService $videoLinkTrimmer): Response
     {
         $video = new Video();
         $form = $this->createForm(VideoType::class, $video);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            // dd($video);
+            // casts the submitted link into an embed link
+            $link = $videoLinkTrimmer->trimUrl($form->get('link')->getData());
+            $video->setLink($link);
             $video->setTrick($trick);
             $videoRepository->add($video);
             return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
