@@ -6,11 +6,11 @@ use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\VideoType;
 use App\Repository\VideoRepository;
+use App\Service\EmbedVideoLink\VideoLinkSorterService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Service\EmbedVideoLink\VideoLinkSorterService;
 
 #[Route('/video')]
 class VideoController extends AbstractController
@@ -45,6 +45,7 @@ class VideoController extends AbstractController
             $video->setLink($link);
             $video->setTrick($trick);
             $videoRepository->add($video);
+
             return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
 

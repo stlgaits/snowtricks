@@ -2,12 +2,10 @@
 
 namespace App\Entity;
 
-use App\Service\SluggerService;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TrickRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\String\Slugger\SluggerInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
