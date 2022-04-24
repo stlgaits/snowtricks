@@ -54,6 +54,10 @@ class Trick implements \Stringable
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class)]
     private $images;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $createdBy;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -243,6 +247,18 @@ class Trick implements \Stringable
                 $image->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }
