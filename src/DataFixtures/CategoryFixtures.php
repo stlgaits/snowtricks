@@ -19,18 +19,18 @@ class CategoryFixtures extends Fixture
 
     private $trickCategories = [
         'aerial',
-        'grab',
-        'rotation',
         'flip',
+        'grab',
+        'inverted hand plants',
+        'rotation',
         'slide',
         'spin',
         'stall',
         'straight air',
-        'inverted hand plants',
         'surface',
     ];
 
-    public static function getReferenceKey($key)
+    public static function getReferenceKey($key): string
     {
         return sprintf('trick_category_%s', $key);
     }
