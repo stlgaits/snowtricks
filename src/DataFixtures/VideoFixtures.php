@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Video;
 use App\Repository\TrickRepository;
+use App\Service\EmbedVideoLink\VideoLinkSorterService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -11,6 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 class VideoFixtures extends Fixture implements DependentFixtureInterface
 {
     protected $trickRepository;
+    protected $videoLinkTrimmer;
 
     private $videoLinks = [
         'butter' => [
@@ -57,9 +59,10 @@ class VideoFixtures extends Fixture implements DependentFixtureInterface
         ],
     ];
 
-    public function __construct(TrickRepository $trickRepository)
+    public function __construct(TrickRepository $trickRepository, VideoLinkSorterService $videoLinkTrimmer)
     {
         $this->trickRepository = $trickRepository;
+        $this->videoLinkTrimmer = $videoLinkTrimmer;
     }
 
     public function load(ObjectManager $manager): void
@@ -68,6 +71,7 @@ class VideoFixtures extends Fixture implements DependentFixtureInterface
             foreach ($videoLinksArray as $videoLink) {
                 $trick = $this->trickRepository->findOneBy(['name' => ucfirst($trickName)]);
                 $video = new Video();
+                $videoLink = $this->videoLinkTrimmer->trimUrl($videoLink);
                 $video->setLink($videoLink)
                     ->setTrick($trick);
                 $manager->persist($video);
