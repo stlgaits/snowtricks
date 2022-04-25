@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class LogoutController extends AbstractController
 {
@@ -12,5 +12,4 @@ class LogoutController extends AbstractController
     {
         throw new \Exception('logout() should never be reached');
     }
-
 }

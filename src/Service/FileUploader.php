@@ -39,8 +39,8 @@ class FileUploader
     public function remove($fileName)
     {
         // Physically remove the file from the server
-        if (file_exists($this->getTargetDirectory() . '/' . $fileName)) {
-            unlink($this->getTargetDirectory() . '/' . $fileName);
+        if (file_exists($this->getTargetDirectory().'/'.$fileName)) {
+            unlink($this->getTargetDirectory().'/'.$fileName);
         }
     }
 

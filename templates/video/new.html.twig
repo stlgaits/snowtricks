@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <section class="container vh-65 text-center my-3">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6 my-5">
+                <h1 class="display-3 mb-5">Add new Video</h1>
+                {{ include('video/_form.html.twig') }}
+                <a href="{{ path('app_video_index_per_trick', {'trick' : trick.id}) }}" role="button" class="btn btn-light mt-3">back to trick</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

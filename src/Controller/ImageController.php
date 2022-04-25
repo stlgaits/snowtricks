@@ -7,15 +7,14 @@ use App\Entity\Trick;
 use App\Form\ImageType;
 use App\Repository\ImageRepository;
 use App\Service\FileUploader;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/image')]
 class ImageController extends AbstractController
 {
-
     private $fileUploader;
 
     public function __construct(FileUploader $fileUploader)
@@ -42,7 +41,7 @@ class ImageController extends AbstractController
 
     #[Route('/{trick}/new', name: 'app_image_new', methods: ['GET', 'POST'])]
     public function new(Trick $trick, Request $request, ImageRepository $imageRepository): Response
-    {   
+    {
         $image = new Image();
         $form = $this->createForm(ImageType::class, $image);
         $form->handleRequest($request);
@@ -52,6 +51,7 @@ class ImageController extends AbstractController
             $image->setTrick($trick);
             $image->setPath('/uploads/images/'.$image->getFileName());
             $imageRepository->add($image);
+
             return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
@@ -61,7 +61,6 @@ class ImageController extends AbstractController
             'form' => $form,
         ]);
     }
-
 
     #[Route('/{id}', name: 'app_image_delete', methods: ['POST'])]
     public function delete(Request $request, Image $image, ImageRepository $imageRepository): Response

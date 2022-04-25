@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 namespace App\Service;
 
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class SluggerService 
+class SluggerService
 {
     private $slugger;
 
@@ -14,14 +14,12 @@ class SluggerService
     }
 
     /**
-     * Slugify a property's name (can then be used in URLs)
-     *
-     * @param string $name
-     * @return string|null
+     * Slugify a property's name (can then be used in URLs).
      */
     public function slugify(string $name): ?string
     {
         $slug = $this->slugger->slug($name, '-', 'en_GB');
-        return $slug; 
+
+        return $slug;
     }
 }

@@ -35,7 +35,8 @@
 			</div>
 		</div>
 		<section id="media" class="container">
-				{{ render(path('app_image_index_per_trick', {'trick' : trick.id})) }}
+			{{ render(path('app_image_index_per_trick', {'trick' : trick.id})) }}
+			{{ render(path('app_video_index_per_trick', {'trick' : trick.id})) }}
 		</section>
 		<main class="container">
 			<div class="row justify-content-center">
@@ -74,7 +75,7 @@
 						<div class="d-flex">
 							<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
 							<div class="ms-3">
-								<div class="fw-bold"><p>{{comment.author}}</p><span>{{comment.createdAt}}</span></div>
+								<div class="fw-bold"><p>{{comment.author}}</p><span>{{comment.createdAt|date('d/m/Y')}}</span></div>
 								{{comment.message}}
 							</div>
 						</div>

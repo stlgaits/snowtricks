@@ -1,4 +1,45 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <div data-controller="video">
+        {# <p data-video-target="field">allo</p> #}
+    {# {{ form_widget(form) }} #}
+    {# store the prototype on the data-prototype attribute #}
+        <ul id="video-fields-list"
+            data-prototype="{{ form_widget(form.videos.vars.prototype)|e }}"
+            data-widget-tags="{{ '<li></li>'|e }}"
+            data-widget-counter="{{ form.videos|length }}">
+            {% for videoField in form.videos %}
+                <li data-video-target="field">
+                    {{ form_errors(videoField) }}
+                    {{ form_widget(videoField) }}
+                </li>
+            {% else %}
+                <li data-video-target="field">
+                </li>
+            {% endfor %}
+        </ul>
+        <button 
+            type="button"
+            data-action="video#add"
+            class="add-another-collection-widget btn btn-secondary"
+            data-list-selector="#video-fields-list"
+        >Add video</button>
+    </div>
+        
+    {# {{ form_label(form.videos) }}
+    {{ form_errors(form.videos) }}
+
+    <ul>
+    {% for videoField in form.videos %}
+        <li>
+            {{ form_errors(videoField) }}
+            {{ form_widget(videoField) }}
+        </li>
+    {% endfor %}
+    </ul> #}
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+    {# {{ form_row(form.videos) }} #}
+    {{ form_row(form.images) }}
+    {{ form_row(form.categories) }}
     <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
 {{ form_end(form) }}
