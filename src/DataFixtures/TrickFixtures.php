@@ -2,16 +2,13 @@
 
 namespace App\DataFixtures;
 
-use Faker\Factory;
 use App\Entity\Trick;
 use App\Service\SluggerService;
-use App\DataFixtures\UserFixtures;
-use App\DataFixtures\CategoryFixtures;
 use DateTimeImmutable;
-use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class TrickFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -19,15 +16,15 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
 
     private $trickNames = [
         'butter',
-        'indy grab', 
+        'indy grab',
         'japan',
-        'mute grab', 
-        'nose grab', 
+        'mute grab',
+        'nose grab',
         'ollie',
-        'sad', 
-        'stalefish', 
-        'tail grab', 
-        'wheelies'
+        'sad',
+        'stalefish',
+        'tail grab',
+        'wheelies',
     ];
 
     public function __construct(SluggerInterface $slugger)
@@ -38,10 +35,10 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = \Faker\Factory::create();
-        
-        foreach($this->trickNames as $key => $trickName){
+
+        foreach ($this->trickNames as $key => $trickName) {
             $category = $this->getReference(CategoryFixtures::getReferenceKey($key % 10));
-            $user = $this->getReference(UserFixtures::getReferenceKey($key %10));
+            $user = $this->getReference(UserFixtures::getReferenceKey($key % 10));
             $trick = new Trick();
             $trick->setName(ucfirst($trickName))
                 ->setDescription($faker->text())
@@ -58,6 +55,6 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
 
     public function getDependencies(): array
     {
-        return [ CategoryFixtures::class, UserFixtures::class];
+        return [CategoryFixtures::class, UserFixtures::class];
     }
 }
