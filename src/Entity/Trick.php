@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\TrickRepository;
-use App\Service\SluggerService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\HasLifecycleCallbacks()]
 class Trick implements \Stringable
 {
-//TODO: TIMESTAMPABLE & SLUGGABLE WITH DOCTRINEEXTENSION???
+    // TODO: TIMESTAMPABLE & SLUGGABLE WITH DOCTRINEEXTENSION???
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable('now');
@@ -43,7 +42,7 @@ class Trick implements \Stringable
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'tricks')]
     private $categories;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]        
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
     private $comments;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -54,6 +53,10 @@ class Trick implements \Stringable
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class)]
     private $images;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $createdBy;
 
     public function getId(): ?int
     {
@@ -177,7 +180,6 @@ class Trick implements \Stringable
 
     public function setSlug(string $slug): self
     {
-        $this->sluggerService->slugify($slug);
         $this->slug = $slug;
 
         return $this;
@@ -245,6 +247,18 @@ class Trick implements \Stringable
                 $image->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }

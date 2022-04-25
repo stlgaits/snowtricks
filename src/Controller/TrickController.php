@@ -4,12 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Trick;
 use App\Form\TrickType;
-use App\Service\SluggerService;
 use App\Repository\TrickRepository;
+use App\Service\SluggerService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/tricks')]
 class TrickController extends AbstractController
@@ -33,6 +33,7 @@ class TrickController extends AbstractController
             $slug = $sluggerService->slugify($trick->getName());
             $trick->setSlug($slug);
             $trickRepository->add($trick);
+
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -47,6 +48,7 @@ class TrickController extends AbstractController
     {
         $categories = $trick->getCategories();
         $comments = $trick->getComments();
+
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
             'categories' => $categories,
@@ -63,6 +65,7 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $trick->setUpdatedAt(new \DateTimeImmutable('now'));
             $trickRepository->add($trick);
+
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 

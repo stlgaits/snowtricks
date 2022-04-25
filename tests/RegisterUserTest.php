@@ -6,13 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RegisterUserTest extends WebTestCase
 {
-
     public function setUp(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/register');
     }
-    
+
     public function testRegisterPageIsDisplayed(): void
     {
         $this->assertResponseIsSuccessful();
@@ -28,9 +27,8 @@ class RegisterUserTest extends WebTestCase
 
     public function testUserCannotRegisterWithExistingEmail()
     {
-
     }
-    
+
     public function testUserCannotRegisterWithExistingUsername()
     {
         // TODO: take into account the displaying of a message (and not an Exception page)
@@ -38,26 +36,21 @@ class RegisterUserTest extends WebTestCase
 
     public function testPasswordMatchesRequirements()
     {
-
     }
 
     public function testUserIsRedirectedToHomepage()
     {
-
     }
 
     public function testUserIsNotLoggedInAutomatically()
     {
-
     }
 
     public function testVerificationEmailIsSent()
     {
-
     }
 
     public function testVerificationTokenActivatesUserAccount()
     {
-        
     }
 }

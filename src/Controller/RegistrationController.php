@@ -42,7 +42,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-// TODO: implement flash message when username already exists, to avoid exception thrown in webprofiler
+            // TODO: implement flash message when username already exists, to avoid exception thrown in webprofiler
             $entityManager->persist($user);
             $entityManager->flush();
 
