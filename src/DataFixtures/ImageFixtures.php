@@ -26,12 +26,12 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
         $tricks = $this->trickRepository->findAll();
         $imageFiles = [];
-        for ($i = 0; $i < $faker->randomNumber(2); $i++) {
-            $imageFiles[] = $faker->image();
+        for ($i = 0; $i < $faker->randomNumber(2); ++$i) {
+            $imageFiles[] = $faker->image('./public/uploads/images', 640, 480);
         }
         foreach ($imageFiles as $imageFile) {
             $image = new Image();
-            $image->setFileName($this->fileUploader->upload($imageFile))
+            $image->setFileName($imageFile)
                     ->setPath('/uploads/images'.$image->getFileName())
                     ->setTrick($faker->randomElement($tricks))
             ;
