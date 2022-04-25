@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Comment;
 use App\Repository\TrickRepository;
 use App\Repository\UserRepository;
+use DateTime;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -30,7 +31,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
         foreach ($tricks as $trick) {
             for ($i = 0; $i < $faker->randomNumber(2); ++$i) {
                 $comment = new Comment();
-                $fakeDateTime = $faker->dateTimeBetween($trick->getCreatedAt());
+                $fakeDateTime = $faker->dateTimeBetween(DateTime::createFromImmutable($trick->getCreatedAt()));
                 $fakeDateTimeImmutable = DateTimeImmutable::createFromMutable($fakeDateTime);
                 $comment->setMessage($faker->paragraph())
                         ->setAuthor($faker->randomElement($users))

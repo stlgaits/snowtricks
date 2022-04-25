@@ -44,7 +44,7 @@ class UserFixtures extends Fixture
     public function addSuperAdmin(): User
     {
         $admin = new User();
-        $admin->setEmail($this->params->get('admin_email'))
+        $admin->setEmail($this->params->get('admin_email_address'))
             ->setUsername($this->params->get('admin_username'))
             ->setPassword($this->hasher->hashPassword($admin, $this->params->get('admin_password')))
             ->setIsVerified(true)
