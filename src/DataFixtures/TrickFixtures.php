@@ -17,24 +17,23 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
 {
     protected $slugger;
 
+    private $trickNames = [
+        'butter',
+        'indy grab', 
+        'japan',
+        'mute grab', 
+        'nose grab', 
+        'ollie',
+        'sad', 
+        'stalefish', 
+        'tail grab', 
+        'wheelies'
+    ];
+
     public function __construct(SluggerInterface $slugger)
     {
         $this->slugger = new SluggerService($slugger);
     }
-    
-    private $trickNames = [
-        'mute', 
-        'sad', 
-        'indy', 
-        'stalefish', 
-        'tail grab', 
-        'nose grab', 
-        'ollie',
-        'wheelies',
-        'butter',
-        'japan'
-
-    ];
 
     public function load(ObjectManager $manager): void
     {
@@ -44,20 +43,20 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
             $category = $this->getReference(CategoryFixtures::getReferenceKey($key % 10));
             $user = $this->getReference(UserFixtures::getReferenceKey($key %10));
             $trick = new Trick();
-            $trick->setName(ucfirst($trickName));
-            $trick->setDescription($faker->text());
-            $trick->setSlug($this->slugger->slugify($trick->getName()));
-            $trick->setCreatedAt(new DateTimeImmutable('-1 day'));
-            $trick->setUpdatedAt(new DateTimeImmutable());
-            $trick->addCategory($category);
-            $trick->setCreatedBy($user);
+            $trick->setName(ucfirst($trickName))
+                ->setDescription($faker->text())
+                ->setSlug($this->slugger->slugify($trick->getName()))
+                ->setCreatedAt(new DateTimeImmutable('-1 day'))
+                ->setUpdatedAt(new DateTimeImmutable())
+                ->addCategory($category)
+                ->setCreatedBy($user);
             $manager->persist($trick);
         }
 
         $manager->flush();
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [ CategoryFixtures::class, UserFixtures::class];
     }
