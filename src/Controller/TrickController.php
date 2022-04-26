@@ -32,6 +32,7 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $sluggerService->slugify($trick->getName());
             $trick->setSlug($slug);
+            $trick->setCreatedBy($this->getUser());
             $trickRepository->add($trick);
 
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
