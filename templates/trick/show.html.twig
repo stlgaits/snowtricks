@@ -75,8 +75,17 @@
 						<div class="d-flex">
 							<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
 							<div class="ms-3">
-								<div class="fw-bold"><p>{{comment.author}}</p><span>{{comment.createdAt|date('d/m/Y')}}</span></div>
+								<div class="fw-bold">
+									<p>{{comment.author}}</p>
+									<span>{{ comment.createdAt ? comment.createdAt|date('d/m/Y H:i:s') : '' }}</span>
+								</div>
 								{{comment.message}}
+								{% if comment.author == app.user %}
+								<div class="d-flex justify-content-start my-2">
+									<a class="btn btn-dark me-2" role="button" href="{{ path('app_comment_edit', {'id': comment.id}) }}">Edit</a>
+									{{ include('comment/_delete_form.html.twig') }}
+								</div>
+								{% endif %}
 							</div>
 						</div>
 					{% else %}
