@@ -36,7 +36,6 @@ class CommentController extends AbstractController
             $comment->setCreatedAt($now);
             $comment->setAuthor($this->getUser());
             $commentRepository->add($comment);
-            // return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
             return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
@@ -75,10 +74,11 @@ class CommentController extends AbstractController
     #[Route('/{id}', name: 'app_comment_delete', methods: ['POST'])]
     public function delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
+        $trick = $comment->getTrick();
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment);
         }
 
-        return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_trick_show',  ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
     }
 }
