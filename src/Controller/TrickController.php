@@ -50,9 +50,7 @@ class TrickController extends AbstractController
     {
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $commentRepository->getCommentPaginator($trick, $offset);
-
         $categories = $trick->getCategories();
-        $comments = $trick->getComments();
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,

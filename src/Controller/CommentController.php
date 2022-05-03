@@ -59,6 +59,8 @@ class CommentController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
+        $trick = $comment->getTrick();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $commentRepository->add($comment);
 
@@ -68,6 +70,7 @@ class CommentController extends AbstractController
         return $this->renderForm('comment/edit.html.twig', [
             'comment' => $comment,
             'form' => $form,
+            'trick' => $trick
         ]);
     }
 
