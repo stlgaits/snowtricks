@@ -19,9 +19,9 @@
                 >
                     <div class="card shadow">
                         {% if trick.images|length > 0 %}
-                            <img src="{{trick.images[0].path}}" class="card-img-top" alt="Thumbnail image">
+                            <img src="{{trick.images[0].path}}" class="card-img-top" alt="Thumbnail image" width="360" height="300">
                         {% else %}
-                            <img src="https://picsum.photos/seed/picsum/200" class="card-img-top" alt="Placeholder img">
+                            <img src="https://picsum.photos/seed/picsum/200" class="card-img-top" alt="Placeholder img" width="360" height="300">
                         {% endif %}
                         <div class="card-body">
                             <div class="row text-center justify-content-around">
