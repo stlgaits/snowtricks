@@ -18,7 +18,11 @@
                     data-load-more-content-target="trick"
                 >
                     <div class="card shadow">
-                        <img src="https://picsum.photos/seed/picsum/200" class="card-img-top" alt="Placeholder img">
+                        {% if trick.images|length > 0 %}
+                            <img src="{{trick.images[0].path}}" class="card-img-top" alt="Thumbnail image">
+                        {% else %}
+                            <img src="https://picsum.photos/seed/picsum/200" class="card-img-top" alt="Placeholder img">
+                        {% endif %}
                         <div class="card-body">
                             <div class="row text-center justify-content-around">
                                 <div class="col">
