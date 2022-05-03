@@ -93,6 +93,16 @@
 							<p class="text-muted">{{ 'no_comment' | trans }}</p>
 						</div>
 					{% endfor %}
+					{% if comments|length > 0 %}
+						<div class="d-flex justify-content-between mt-3">
+							{% if previous >= 0 %}
+								<a role="button" class="btn btn-dark" href="{{ path('app_trick_show', { slug: trick.slug, offset: previous }) }}"><i class="bi bi-arrow-left"></i></a>
+							{% endif %}
+							{% if next < comments|length %}
+								<a role="button"  class="btn btn-dark" href="{{ path('app_trick_show', { slug: trick.slug, offset: next }) }}"><i class="bi bi-arrow-right"></i></a>
+							{% endif %}
+						</div>
+					{% endif %}
 				</div>
 			</div>
 		</section>
