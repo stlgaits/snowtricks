@@ -4,13 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Trick;
 use App\Form\TrickType;
-use App\Service\SluggerService;
-use App\Repository\TrickRepository;
 use App\Repository\CommentRepository;
+use App\Repository\TrickRepository;
+use App\Service\SluggerService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/tricks')]
 class TrickController extends AbstractController

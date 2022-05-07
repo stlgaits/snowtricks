@@ -36,6 +36,7 @@ class CommentController extends AbstractController
             $comment->setCreatedAt($now);
             $comment->setAuthor($this->getUser());
             $commentRepository->add($comment);
+
             return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
@@ -70,7 +71,7 @@ class CommentController extends AbstractController
         return $this->renderForm('comment/edit.html.twig', [
             'comment' => $comment,
             'form' => $form,
-            'trick' => $trick
+            'trick' => $trick,
         ]);
     }
 
@@ -82,6 +83,6 @@ class CommentController extends AbstractController
             $commentRepository->remove($comment);
         }
 
-        return $this->redirectToRoute('app_trick_show',  ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
     }
 }

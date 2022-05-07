@@ -2,15 +2,14 @@
 
 namespace App\DataFixtures;
 
-use Faker\Factory;
 use App\Entity\Image;
-use App\Service\FileUploader;
 use App\Repository\TrickRepository;
-use Doctrine\Persistence\ObjectManager;
+use App\Service\FileUploader;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
+use Symfony\Component\HttpFoundation\File\File;
 
 class ImageFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -21,7 +20,6 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
     {
         $this->trickRepository = $trickRepository;
         $this->fileUploader = $fileUploader;
-
     }
 
     public function load(ObjectManager $manager): void
@@ -34,8 +32,8 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
         $parentDirs[0] = array_shift($imageFiles);
         $parentDirs[1] = array_shift($imageFiles);
         foreach ($imageFiles as $fileName) {
-            $file = new File($fileName);
-            if(is_file($file)){
+            $file = new File($imagesFolder.'/'.$fileName);
+            if (is_file($file)) {
                 $this->fileUploader->loadFromOtherDir($file);
                 $image = new Image();
                 $image->setFileName($fileName)
@@ -43,7 +41,7 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
                         ->setTrick($faker->randomElement($tricks))
                 ;
                 $manager->persist($image);
-            } 
+            }
         }
 
         $manager->flush();
