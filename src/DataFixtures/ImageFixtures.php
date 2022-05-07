@@ -21,6 +21,7 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
     {
         $this->trickRepository = $trickRepository;
         $this->fileUploader = $fileUploader;
+
     }
 
     public function load(ObjectManager $manager): void
@@ -28,34 +29,21 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
         $tricks = $this->trickRepository->findAll();
         $imagesFolder = realpath('./assets/images/image_fixtures/');
-        // $imagesFolder = pathinfo('./assets/images/image_fixtures/');
         $imageFiles = scandir($imagesFolder);
+        // remove the first 2 lines of the array which refer to '.' & '..'
         $parentDirs[0] = array_shift($imageFiles);
         $parentDirs[1] = array_shift($imageFiles);
-        // $imageFiles = array_shift($imageFiles);
-        // var_dump($imageFiles);
-        // die();
-        // for ($i = 0; $i < $faker->randomNumber(2); ++$i) {
-            // $imageFiles[] =  $this->fileUploader->upload($imageFile);
-            // $imageFiles[] = $faker->image('./public/uploads/images', 640, 480, fullPath:false);
-        // }
-        foreach ($imageFiles as $key =>  $imageFile) {
-            $filename = $key.'.jpg';
-            $imageFile= strval($imagesFolder."\\".$imageFile);
-            // $imageFile= pathinfo($imageFile)['filename'];
-            $file = new UploadedFile($imageFile, $filename);
+        foreach ($imageFiles as $fileName) {
+            $file = new File($fileName);
             if(is_file($file)){
-                $this->fileUploader->upload($file);
+                $this->fileUploader->loadFromOtherDir($file);
                 $image = new Image();
-                $image->setFileName($imageFile)
+                $image->setFileName($fileName)
                         ->setPath('/uploads/images/'.$image->getFileName())
                         ->setTrick($faker->randomElement($tricks))
                 ;
                 $manager->persist($image);
-                echo PHP_EOL."OUI".PHP_EOL;
-            } else {
-                echo PHP_EOL."NON".PHP_EOL;
-            }
+            } 
         }
 
         $manager->flush();
