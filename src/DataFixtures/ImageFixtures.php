@@ -34,9 +34,9 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
         foreach ($imageFiles as $fileName) {
             $file = new File($imagesFolder.'/'.$fileName);
             if (is_file($file)) {
-                $this->fileUploader->loadFromOtherDir($file);
+                $uniqueFileName =  $this->fileUploader->loadFromOtherDir($file);
                 $image = new Image();
-                $image->setFileName($fileName)
+                $image->setFileName($uniqueFileName)
                         ->setPath('/uploads/images/'.$image->getFileName())
                         ->setTrick($faker->randomElement($tricks))
                 ;
