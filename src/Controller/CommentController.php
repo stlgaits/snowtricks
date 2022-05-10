@@ -28,8 +28,13 @@ class CommentController extends AbstractController
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
+        // dd($form);
         $form->handleRequest($request);
 
+        // if ($form->isSubmitted()) {
+        //     var_dump($request);
+        //     die();
+        // }
         if ($form->isSubmitted() && $form->isValid()) {
             $now = new DateTimeImmutable();
             $comment->setTrick($trick);

@@ -24,6 +24,8 @@
                 <div>{{ 'empty' | trans }}</div>
             {% endfor %}
         </div>
-        <a href="{{ path('app_video_new', {'trick' : trick.id}) }}" role="button" class="btn btn-success my-5 add_item_link" data-collection-holder-class="videos">{{ 'create_new' | trans }} <i class="fa fa-youtube" aria-hidden="true"></i></a>
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a href="{{ path('app_video_new', {'trick' : trick.id}) }}" role="button" class="btn btn-success my-5 add_item_link" data-collection-holder-class="videos">{{ 'create_new' | trans }} <i class="fa fa-youtube" aria-hidden="true"></i></a>
+        {% endif %}
     </aside>
 {% endblock %}
