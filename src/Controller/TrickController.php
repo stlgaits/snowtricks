@@ -64,6 +64,7 @@ class TrickController extends AbstractController
     #[Route('/{slug}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Trick $trick, TrickRepository $trickRepository): Response
     {
+        // dd($trick);
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 

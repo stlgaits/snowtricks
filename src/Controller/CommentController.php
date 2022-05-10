@@ -27,14 +27,8 @@ class CommentController extends AbstractController
     public function new(Request $request, CommentRepository $commentRepository, Trick $trick): Response
     {
         $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        // dd($form);
+        $form = $this->createForm(CommentType::class, $comment, ['action' => $this->generateUrl('app_comment_new', [ 'trick' => $trick->getId()])]);
         $form->handleRequest($request);
-
-        // if ($form->isSubmitted()) {
-        //     var_dump($request);
-        //     die();
-        // }
         if ($form->isSubmitted() && $form->isValid()) {
             $now = new DateTimeImmutable();
             $comment->setTrick($trick);
