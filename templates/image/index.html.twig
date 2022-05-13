@@ -1,12 +1,12 @@
 {% block body %}
-    <aside class="text-center">
-        <ul class="medias d-flex justify-content-around"
+    <aside class="text-center container my-5">
+        <ul class="medias d-flex justify-content-center ps-1 flex-wrap flex-xl-nowrap"
             {# data-index="{{ images|length > 0 ? images|last.vars.name + 1 : 0 }}"
             data-prototype="{{ form_widget(images.vars.prototype)|e('html_attr') }}" #}
         >
             {% for image in images %}
-                <li class="list-unstyled">
-                    <img src="{{ image.path }}" alt="trick"/>
+                <li class="list-unstyled my-2">
+                    <img src="{{ image.path }}" alt="trick" width="640" height="480"/>
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         {{ include('image/_delete_form.html.twig') }}
                     {% endif %}
@@ -15,6 +15,8 @@
                 <li class="list-unstyled">{{ 'empty' | trans }}</li>
             {% endfor %}
         </ul>
-        <a href="{{ path('app_image_new', {'trick' : trick.id}) }}" role="button" class="btn btn-primary mt-2 add_item_link" data-collection-holder-class="images">{{ 'create_new' | trans }}</a>
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a href="{{ path('app_image_new', {'trick' : trick.id}) }}" role="button" class="btn btn-success my-4 add_item_link" data-collection-holder-class="images">{{ 'create_new' | trans }}</a>
+        {% endif %}
     </aside>
 {% endblock %}

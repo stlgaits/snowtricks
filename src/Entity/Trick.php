@@ -6,9 +6,11 @@ use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
+#[UniqueEntity(fields: ['name'], message: 'This trick already exists')]
 class Trick implements \Stringable
 {
     // TODO: TIMESTAMPABLE & SLUGGABLE WITH DOCTRINEEXTENSION???
@@ -27,7 +29,7 @@ class Trick implements \Stringable
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255)]

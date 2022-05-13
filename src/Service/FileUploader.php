@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -47,5 +48,21 @@ class FileUploader
     public function getTargetDirectory()
     {
         return $this->targetDirectory;
+    }
+
+    public function loadFromOtherDir(File $file)
+    {
+        $originalFilename = pathinfo($file, PATHINFO_FILENAME);
+        $safeFilename = $this->slugger->slug($originalFilename);
+        $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+
+        try {
+            $file->move($this->getTargetDirectory(), $fileName);
+        } catch (FileException $e) {
+            $this->logger->error($e->getMessage().' '.$e->getFile().' line : '.$e->getLine());
+            throw new FileException('Failed to load file : '.$e->getMessage().' on '.$e->getFile().' line : '.$e->getLine());
+        }
+
+        return $fileName;
     }
 }

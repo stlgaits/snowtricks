@@ -29,12 +29,6 @@ h6 {
   font-size: 2.5rem;
 }
 
-@media (min-width: 768px) {
-  .display-4 {
-    font-size: 3rem;
-  }
-}
-
 .nav-scroller {
   position: relative;
   z-index: 2;
@@ -72,16 +66,16 @@ h6 {
   height: 250px;
 }
 
-@media (min-width: 768px) {
-  .h-md-250 {
-    height: 250px;
-  }
-}
-
 .jumbotron {
   background: url('../images/background.jpg');
   background-size: cover;
+
 }
+
+.background-layout {
+  background: white;
+}
+
 
 /* Pagination */
 .blog-pagination {
@@ -133,8 +127,25 @@ h6 {
   user-select: none;
 }
 
+
+/* Responsive media queries : larger screens */
 @media (min-width: 768px) {
   .bd-placeholder-img-lg {
     font-size: 3.5rem;
+  }
+  .h-md-250 {
+    height: 250px;
+  }
+  .display-4 {
+    font-size: 3rem;
+  }
+
+  .background-layout {
+    background: 
+                linear-gradient(white, white),
+                url('../images/background_stairs.jpg')
+                no-repeat
+                ;
+    background-blend-mode: saturation;
   }
 }

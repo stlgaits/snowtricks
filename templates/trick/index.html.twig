@@ -1,11 +1,28 @@
 {% block title %}<h2 class="display-5 text-center my-5">{{ 'tricks' | trans }}</h2>{% endblock %}
 {% block body %}
-    <section id="tricks" class="container">
-        <div class="row">
-            {% for trick in tricks %}
-                <div class="col-lg-4 mb-5">
+    <section id="tricks" class="container"
+        {{ stimulus_controller('load-more-content', {
+            max: 15,
+        }) }}
+    >
+        <div 
+            class="row"
+            data-load-more-content-target="tricks"
+        >
+            {% if tricks|length > 15 %}
+                {{ tricks|length }}
+            {% endif %}
+            {% for index , trick in tricks %}
+                <div 
+                    class="col-lg-4 mb-5"
+                    data-load-more-content-target="trick"
+                >
                     <div class="card shadow">
-                        <img src="https://picsum.photos/seed/picsum/200" class="card-img-top" alt="Placeholder img">
+                        {% if trick.images|length > 0 %}
+                            <img src="{{trick.images[0].path}}" class="card-img-top" alt="Thumbnail image" width="360" height="300">
+                        {% else %}
+                            <img src="https://picsum.photos/seed/picsum/200" class="card-img-top" alt="Placeholder img" width="360" height="300">
+                        {% endif %}
                         <div class="card-body">
                             <div class="row text-center justify-content-around">
                                 <div class="col">
@@ -31,6 +48,17 @@
                 <p class="text-center">{{ 'empty' | trans }}</p>
             {% endfor %}
         </div>
+        {% if tricks %}
+            <div class="text-center mb-5">
+                <button 
+                    role="button" 
+                    class="btn btn-outline-warning"
+                    data-action="load-more-content#onLoadMore"
+                >
+                    {{ 'load_more' | trans }}
+                </button>
+            </div>
+        {% endif %}
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <div class="text-center mb-5">
                 <a href="{{ path('app_trick_new') }}" role="button" class="btn btn-primary">{{ 'create_new' | trans }}</a>

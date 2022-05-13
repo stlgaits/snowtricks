@@ -8,7 +8,7 @@
             data-widget-tags="{{ '<li></li>'|e }}"
             data-widget-counter="{{ form.videos|length }}">
             {% for videoField in form.videos %}
-                <li data-video-target="field">
+                <li class="list-unstyled" data-video-target="field">
                     {{ form_errors(videoField) }}
                     {{ form_widget(videoField) }}
                 </li>
@@ -40,6 +40,12 @@
     {{ form_row(form.description) }}
     {# {{ form_row(form.videos) }} #}
     {{ form_row(form.images) }}
-    {{ form_row(form.categories) }}
+
+    {# <ul class="images"></ul> #}
+
+
+
+
+    {# {{ form_row(form.categories) }} #}
     <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
 {{ form_end(form) }}
