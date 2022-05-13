@@ -5,96 +5,112 @@
 {% endblock %}
 
 {% block body %}
-	<section class="container-fluid">
-		<div class="container jumbotron">
-			<div class="p-4 p-md-5 mb-4 text-white rounded jumbotron">
-				<div class="row justify-content-center">
-					<div class="col">
-						<a href="{{ path('app_home') }}" class="text-decoration-none text-black display-6">
-							<i class="bi bi-arrow-left-square-fill"></i>
-						</a>
-					</div>
-					{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-						<div class="col justify-content-end d-flex gap-3">
-							<div>
-								<a class="text-decoration-none btn btn-outline-light text-black display-4" href="{{ path('app_trick_edit', {'slug': trick.slug}) }}">
-									<i class="bi bi-pencil-fill"></i>
-								</a>
+	<section class="container-fluid background-layout">
+		<div class="row justify-content-center">
+			<div class="col-md-8 pt-5">
+				<div class="card shadow-lg rounded my-5">
+					<div class="jumbotron vh-50 card-img-top">
+						<div class="p-4 p-md-5 mb-4 text-white rounded">
+							<div class="row justify-content-center">
+								<div class="col">
+									<a href="{{ path('app_home') }}" class="text-decoration-none text-black display-6">
+										<i class="bi bi-arrow-left-square-fill"></i>
+									</a>
+								</div>
+								{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+									<div class="col justify-content-end d-flex gap-3">
+										<div>
+											<a class="text-decoration-none btn btn-outline-light text-black display-4" href="{{ path('app_trick_edit', {'slug': trick.slug}) }}">
+												<i class="bi bi-pencil-fill"></i>
+											</a>
+										</div>
+										<div>
+											{{ include('trick/_delete_form.html.twig') }}
+										</div>
+									</div>
+								{% endif %}
 							</div>
-							<div>
-								{{ include('trick/_delete_form.html.twig') }}
+							<div class="row justify-content-center">
+								<div class="col-md-6 px-0 text-center">
+									<h1 class="display-1 font-italic">{{ trick.name }}</h1>
+								</div>
 							</div>
 						</div>
-					{% endif %}
-				</div>
-				<div class="row justify-content-center">
-					<div class="col-md-6 px-0 text-center">
-						<h1 class="display-1 font-italic">{{ trick.name }}</h1>
 					</div>
-				</div>
-			</div>
-		</div>
-		<section id="media" class="container">
-			{{ render(path('app_image_index_per_trick', {'trick' : trick.id})) }}
-			{{ render(path('app_video_index_per_trick', {'trick' : trick.id})) }}
-		</section>
-		<main class="container">
-			<div class="row justify-content-center">
-				<div class="col">
-					<h3 class="pb-4 mb-4 font-italic border-bottom">
-						#{{ trick.id }}
-					</h3>
-					<div class="blog-post">
-						<h2 class="blog-post-title">{{ trick.name }}</h2>
-						<p class="blog-post-meta">{{ trick.updatedAt ? trick.updatedAt|date('d/m/Y H:i:s') : '' }} {{'by' | trans }}
-							<a href="#">Mark</a>
-						</p>
-						<p>{{ trick.description }}</p>
-						{% for key, category in categories %}
-							<span class="badge bg-info rounded-pill">{{category.name}}</span>
-						{% else %}
-							<span class="badge bg-light text-dark rounded-pill ">{{ 'no_category' | trans }}</span>
-						{% endfor %}
-					</div>
-				</div>
-			</div>
-		</main>
-		<section class="mb-5 container">
-			<div class="card bg-light shadow-sm">
-				<div class="card-body">
-					{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-						{{ render(path('app_comment_new', {'trick' : trick.id})) }}
-					{% else %}
-						<div class="text-center mt-4">
-							<h4 class="card-title">{{ 'comments' | trans }}</h4>
-							<p class="text-muted">{{ 'must_login' | trans }}</p>
-							<a href="{{ path('app_login')}}" role="button" class="btn btn-secondary">{{'login' | trans }}</a>
+					<section id="media" class="container">
+						{{ render(path('app_image_index_per_trick', {'trick' : trick.id})) }}
+						{{ render(path('app_video_index_per_trick', {'trick' : trick.id})) }}
+					</section>
+					<main id="trick-info" class="container">
+						<div class="row justify-content-center">
+							<div class="col">
+								<h3 class="pb-4 mb-4 font-italic border-bottom">
+									#{{ trick.id }}
+								</h3>
+								<div class="blog-post">
+									<h2 class="blog-post-title">{{ trick.name }}</h2>
+									<p class="blog-post-meta">{{ trick.updatedAt ? trick.updatedAt|date('d/m/Y H:i:s') : '' }} {{'by' | trans }}
+										<a href="#">Mark</a>
+									</p>
+									<p>{{ trick.description }}</p>
+									{% for key, category in categories %}
+										<span class="badge bg-info rounded-pill">{{category.name}}</span>
+									{% else %}
+										<span class="badge bg-light text-dark rounded-pill ">{{ 'no_category' | trans }}</span>
+									{% endfor %}
+								</div>
+							</div>
 						</div>
-					{% endif %}
-					{% for comment in comments %}
-						<div class="d-flex">
-							<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-							<div class="ms-3">
-								<div class="fw-bold">
-									<p>{{comment.author}}</p>
-									<span>{{ comment.createdAt ? comment.createdAt|date('d/m/Y H:i:s') : '' }}</span>
-								</div>
-								{{comment.message}}
-								{% if comment.author == app.user %}
-								<div class="d-flex justify-content-start my-2">
-									<a class="btn btn-dark me-2" role="button" href="{{ path('app_comment_edit', {'id': comment.id}) }}">Edit</a>
-									{{ include('comment/_delete_form.html.twig') }}
-								</div>
+					</main>
+					<section id="comments" class="mb-5 container">
+						<div class="card bg-light shadow-sm">
+							<div class="card-body">
+								{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+									{{ render(path('app_comment_new', {'trick' : trick.id})) }}
+								{% else %}
+									<div class="text-center mt-4">
+										<h4 class="card-title">{{ 'comments' | trans }}</h4>
+										<p class="text-muted">{{ 'must_login' | trans }}</p>
+										<a href="{{ path('app_login')}}" role="button" class="btn btn-secondary">{{'login' | trans }}</a>
+									</div>
+								{% endif %}
+								{% for comment in comments %}
+									<div class="d-flex">
+										<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+										<div class="ms-3">
+											<div class="fw-bold">
+												<p>{{comment.author}}</p>
+												<span>{{ comment.createdAt ? comment.createdAt|date('d/m/Y H:i:s') : '' }}</span>
+											</div>
+											{{comment.message}}
+											{% if comment.author == app.user %}
+											<div class="d-flex justify-content-start my-2">
+												<a class="btn btn-dark me-2" role="button" href="{{ path('app_comment_edit', {'id': comment.id}) }}">Edit</a>
+												{{ include('comment/_delete_form.html.twig') }}
+											</div>
+											{% endif %}
+										</div>
+									</div>
+								{% else %}
+									<div class="d-flex mt-4 justify-content-center">
+										<p class="text-muted">{{ 'no_comment' | trans }}</p>
+									</div>
+								{% endfor %}
+								{% if comments|length > 0 %}
+									<div class="d-flex justify-content-between mt-3">
+										{% if previous >= 0 %}
+											<a role="button" class="btn btn-dark" href="{{ path('app_trick_show', { slug: trick.slug, offset: previous }) }}"><i class="bi bi-arrow-left"></i></a>
+										{% endif %}
+										{% if next < comments|length %}
+											<a role="button"  class="btn btn-dark" href="{{ path('app_trick_show', { slug: trick.slug, offset: next }) }}"><i class="bi bi-arrow-right"></i></a>
+										{% endif %}
+									</div>
 								{% endif %}
 							</div>
 						</div>
-					{% else %}
-						<div class="d-flex mt-4 justify-content-center">
-							<p class="text-muted">{{ 'no_comment' | trans }}</p>
-						</div>
-					{% endfor %}
+					</section>
 				</div>
 			</div>
-		</section>
+		</div>
 	</section>
 {% endblock %}

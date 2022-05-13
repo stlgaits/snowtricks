@@ -9,6 +9,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\HttpFoundation\File\File;
 
 class ImageFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -25,17 +26,22 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
         $tricks = $this->trickRepository->findAll();
-        $imageFiles = [];
-        for ($i = 0; $i < $faker->randomNumber(2); ++$i) {
-            $imageFiles[] = $faker->image('./public/uploads/images', 640, 480, fullPath:false);
-        }
-        foreach ($imageFiles as $imageFile) {
-            $image = new Image();
-            $image->setFileName($imageFile)
-                    ->setPath('/uploads/images/'.$image->getFileName())
-                    ->setTrick($faker->randomElement($tricks))
-            ;
-            $manager->persist($image);
+        $imagesFolder = realpath('./assets/images/image_fixtures/');
+        $imageFiles = scandir($imagesFolder);
+        // remove the first 2 lines of the array which refer to '.' & '..'
+        $parentDirs[0] = array_shift($imageFiles);
+        $parentDirs[1] = array_shift($imageFiles);
+        foreach ($imageFiles as $fileName) {
+            $file = new File($imagesFolder.'/'.$fileName);
+            if (is_file($file)) {
+                $uniqueFileName =  $this->fileUploader->loadFromOtherDir($file);
+                $image = new Image();
+                $image->setFileName($uniqueFileName)
+                        ->setPath('/uploads/images/'.$image->getFileName())
+                        ->setTrick($faker->randomElement($tricks))
+                ;
+                $manager->persist($image);
+            }
         }
 
         $manager->flush();

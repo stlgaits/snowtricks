@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
+#[UniqueEntity(fields: ['fileName, path'], message: 'There is already an image with this name.')]
 class Image
 {
     #[ORM\Id]
@@ -13,10 +15,10 @@ class Image
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $fileName;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $path;
 
     #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'images')]

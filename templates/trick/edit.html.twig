@@ -4,12 +4,25 @@
 
 {% block body %}
     <section class="container-fluid">
-        <h1>Edit Trick</h1>
-
-        {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
-
-        <a href="{{ path('app_home') }}">{{ 'back_to_list' | trans }}</a>
-
-        {{ include('trick/_delete_form.html.twig') }}
+        <div class="row">
+            <div class="col mt-4 mx-4">
+                <a role="button" class="btn btn-dark text-decoration-none" href="{{ path('app_home') }}"><i class="bi bi-arrow-left"></i></a>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5 text-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg rounded border-0 mb-5 p-5">
+                    <div class="row text-end">
+                        <div class="col">
+                            {{ include('trick/_delete_form.html.twig') }}
+                        </div>
+                    </div>
+                    <h1 class="card-title">Modifier Trick</h1>
+                    <div class="card-body">
+                        {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 {% endblock %}

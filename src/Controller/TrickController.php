@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Trick;
 use App\Form\TrickType;
+use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
 use App\Service\SluggerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,21 +46,25 @@ class TrickController extends AbstractController
     }
 
     #[Route('/details/{slug}', name: 'app_trick_show', methods: ['GET'])]
-    public function show(Trick $trick): Response
+    public function show(Trick $trick, Request $request, CommentRepository $commentRepository): Response
     {
+        $offset = max(0, $request->query->getInt('offset', 0));
+        $paginator = $commentRepository->getCommentPaginator($trick, $offset);
         $categories = $trick->getCategories();
-        $comments = $trick->getComments();
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
             'categories' => $categories,
-            'comments' => $comments,
+            'comments' => $paginator,
+            'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
+            'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
         ]);
     }
 
     #[Route('/{slug}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Trick $trick, TrickRepository $trickRepository): Response
     {
+        // dd($trick);
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
