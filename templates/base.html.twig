@@ -28,6 +28,7 @@
                         <li class="nav-item"><a href="{{ path('app_home') }}" class="navbar-link text-black fw-bold text-decoration-none me-3">{{ 'home' | trans }}</a></li>
                         <li class="nav-item"><a href="#tricks" class="navbar-link text-black text-decoration-none me-3">{{ 'tricks' | trans }}</a></li>
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <li class="nav-item"><a class="navbar-link text-black text-decoration-none me-3" href="{{ path('app_user_profile') }}">{{ 'profile_page' | trans }}</a></li>
                             <li class="nav-item"><a class="navbar-link text-black text-decoration-none me-3" href="{{ path('logout') }}">{{ 'logout' | trans }}</a></li>
                         {% else %}
                             <li class="nav-item"><a href="{{ path('app_login') }}" class="navbar-link text-black text-decoration-none me-3">{{ 'login' | trans }}</a></li>
@@ -42,9 +43,9 @@
         </main>
         <footer class="mt-auto py-3 bg-dark blog-footer">
             <div class="container">
-                <p class="text-muted">Copyright - {{ "now"|date("Y") }}</p>
+                <p class="text-muted">Copyright Estelle Gaits - {{ "now"|date("Y") }}</p>
                 <p>
-                    <a href="#">Back to top</a>
+                    <a href="#" class="text-white">{{'back_to_top' | trans }}</a>
                 </p>
             </div>
         </footer>

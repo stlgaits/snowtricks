@@ -142,12 +142,25 @@ h6 {
     font-size: 3rem;
   }
 
-  .background-layout {
+  .background-layout-stairs {
     background: 
                 linear-gradient(white, white),
                 url('../images/background_stairs.jpg')
                 no-repeat
                 ;
+    background-attachment: fixed;
+    background-position: center;
+    background-blend-mode: saturation;
+  }
+
+  .background-layout-fixed {
+    background: 
+                linear-gradient(white, white),
+                url('../images/background.jpg')
+                ;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
     background-blend-mode: saturation;
   }
 }
