@@ -36,6 +36,7 @@ email_verification:
   link_expires: This link will expire in
   cheers: Cheers!
 leave_comment: Leave a comment
+edit_comment: Edit comment
 comments: Comments
 no_comment: No comments on this trick yet
 category: Category

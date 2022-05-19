@@ -1,4 +1,8 @@
 {% block body %}
-    <h4>{{ 'comments' | trans }}</h4>
-    {{ include('comment/_form.html.twig') }}
+    <p class="lead">{{ 'leave_comment' | trans }}</p>
+    <div class="row justify-content-center">
+        <div class="col">
+            {{ include('comment/_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

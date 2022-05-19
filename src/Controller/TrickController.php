@@ -6,6 +6,7 @@ use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
+use App\Repository\VideoRepository;
 use App\Service\SluggerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +25,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, TrickRepository $trickRepository, SluggerService $sluggerService): Response
+    public function new(Request $request, TrickRepository $trickRepository, SluggerService $sluggerService, VideoRepository $videoRepository): Response
     {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
@@ -35,7 +36,6 @@ class TrickController extends AbstractController
             $trick->setSlug($slug);
             $trick->setCreatedBy($this->getUser());
             $trickRepository->add($trick);
-
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 

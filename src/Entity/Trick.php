@@ -13,7 +13,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[UniqueEntity(fields: ['name'], message: 'This trick already exists')]
 class Trick implements \Stringable
 {
-    // TODO: TIMESTAMPABLE & SLUGGABLE WITH DOCTRINEEXTENSION???
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable('now');
@@ -50,7 +49,7 @@ class Trick implements \Stringable
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, orphanRemoval: true, cascade: ["persist"])]
     private $videos;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class)]
