@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}{{ 'welcome' | trans }} !{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="{{absolute_url(asset('build/images/favicon_io/favicon.ico'))}}">
         <link rel="apple-touch-icon" sizes="180x180" href="{{absolute_url(asset('build/images/favicon_io/apple-touch-icon.png'))}}">
@@ -27,6 +28,7 @@
                         <li class="nav-item"><a href="{{ path('app_home') }}" class="navbar-link text-black fw-bold text-decoration-none me-3">{{ 'home' | trans }}</a></li>
                         <li class="nav-item"><a href="#tricks" class="navbar-link text-black text-decoration-none me-3">{{ 'tricks' | trans }}</a></li>
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <li class="nav-item"><a class="navbar-link text-black text-decoration-none me-3" href="{{ path('app_user_profile') }}">{{ 'profile_page' | trans }}</a></li>
                             <li class="nav-item"><a class="navbar-link text-black text-decoration-none me-3" href="{{ path('logout') }}">{{ 'logout' | trans }}</a></li>
                         {% else %}
                             <li class="nav-item"><a href="{{ path('app_login') }}" class="navbar-link text-black text-decoration-none me-3">{{ 'login' | trans }}</a></li>
@@ -41,9 +43,9 @@
         </main>
         <footer class="mt-auto py-3 bg-dark blog-footer">
             <div class="container">
-                <p class="text-muted">Copyright - {{ "now"|date("Y") }}</p>
+                <p class="text-muted">Copyright Estelle Gaits - {{ "now"|date("Y") }}</p>
                 <p>
-                    <a href="#">Back to top</a>
+                    <a href="#" class="text-white">{{'back_to_top' | trans }}</a>
                 </p>
             </div>
         </footer>

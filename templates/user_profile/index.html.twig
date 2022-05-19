@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'profile_page' | trans}}{% endblock %}
+
+{% block body %}
+<div class="background-layout-fixed">
+<section id="user-profile-overview" class="container p-5 ">
+
+    <div class="card p-5 shadow">
+        <div class="mb-2">
+            <a href="{{ path('app_home') }}" class="text-decoration-none text-black display-6">
+                <i class="bi bi-arrow-left-square-fill"></i>
+            </a>
+        </div>
+        <div class="my-2 text-center">
+            <h1>{{user.username}}</h1>
+        </div>
+        <div class="card-body">
+            <div class="mt-2">
+                <label for="username" class="form-label">{{'username' | trans}}</label>
+                <input type="username" disabled value="{{user.username}}" id="username" name="username"  class="form-control" aria-label="username" />
+            </div> 
+            <div class="mt-2">
+                <label for="email" class="form-label">{{'email' | trans}}</label>
+                <input type="email" disabled value="{{user.email}}" id="email" name="email"  class="form-control" aria-label="email" />
+            </div>    
+            <div class="mt-5">
+                <h2>{{ 'comments' | trans }}</h2>
+                <div class="mt-3">
+                    {% for comment in user.comments %}
+                        <div>
+                            <div>
+                                <p class="fw-bold">{{ comment.trick.name }}</p>
+                                <p><span class="fst-italic">{{ comment.createdAt|date('d/m/Y H:i:s') }}</span></p>
+                                <div>
+                                    <p>{{ comment.message }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>            
+            </div>            
+        </div>
+    </div>
+</section>
+</div>
+{% endblock %}
