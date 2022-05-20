@@ -40,7 +40,7 @@ class Trick implements \Stringable
     #[ORM\Column(type: 'datetime_immutable')]
     private $updatedAt;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'tricks')]
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'tricks', cascade: ["persist"])]
     private $categories;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
@@ -52,7 +52,7 @@ class Trick implements \Stringable
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, orphanRemoval: true, cascade: ["persist"])]
     private $videos;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class, cascade: ["persist"])]
     private $images;
 
     #[ORM\ManyToOne(targetEntity: User::class)]

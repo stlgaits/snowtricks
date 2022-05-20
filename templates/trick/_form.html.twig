@@ -1,4 +1,5 @@
 {{ form_start(form) }}
+    <button type="button" class=" btn btn-dark add_item_link" data-collection-holder-class="videos">{{ 'add_video' | trans }}</button>
     <ul class="videos" 
         data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}"
     data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}"
@@ -8,7 +9,12 @@
             <li><input>{{ form_row(video.value) }}</input></li>
         {% endfor %} #}
     </ul>
-    <button type="button" class=" btn btn-dark add_item_link" data-collection-holder-class="videos">Add a video</button>
+    <button type="button" class=" btn btn-dark add_item_link" data-collection-holder-class="images">{{ 'add_image' | trans }}</button>
+    <ul class="images" 
+        data-index="{{ form.images|length > 0 ? form.images|last.vars.name + 1 : 0 }}"
+    data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}"
+    >
+    </ul>
     {# <div 
     data-controller="video"
     > #}
@@ -34,9 +40,6 @@
             data-list-selector="#video-fields-list"
         >{{'create_new' | trans }} video</button> #}
     {# </div> #}
-    
-
- 
 {{ form_end(form) }}
     {# <button class="btn btn-dark">{{ 'submit'| trans }}</button> #}
 <script>
