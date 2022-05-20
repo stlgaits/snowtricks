@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('app_trick_delete', {'slug': trick.slug}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.slug) }}">
+<form method="post" action="{{ path('app_trick_delete', {'slug': trick.slug}) }}" onsubmit="return confirm('{{ 'confirm_delete' | trans }}');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
     <button type="submit" class="btn btn-outline-dark card-link"><i class="bi bi-trash3-fill"></i></button>
 </form>
