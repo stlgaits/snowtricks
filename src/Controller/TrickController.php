@@ -75,7 +75,10 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $trick->setUpdatedAt(new \DateTimeImmutable('now'));
             $trickRepository->add($trick);
-
+            $this->addFlash(
+                'success',
+                'Trick succesfully edited!'
+            );
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -90,6 +93,10 @@ class TrickController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
             $trickRepository->remove($trick);
+            $this->addFlash(
+                'success',
+                'Trick succesfully removed!'
+            );
         }
 
         return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
