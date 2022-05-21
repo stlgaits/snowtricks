@@ -39,8 +39,27 @@
             </div>
         </nav>
         <main class="flex-shrink-0">
-        {% block body %}{% endblock %}
+        {% block body %}
+        {% endblock %}
+        {% block notifications %}
+                {% for label, messages in app.flashes(['success', 'warning']) %}
+                    {% for message in messages %}
+                        <div class="position-fixed bottom-0 end-0 p-3 flash-{{ label }}" style="z-index: 99">
+                            <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="toast-header">
+                                    <img src="{{ asset('build/images/Logo_SnowTricks_01.png') }}" class="me-2" alt="SnowTricks" width="128" height="64">
+                                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                </div>
+                                <div class="toast-body">
+                                    {{ message }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+        {% endblock %}
         </main>
+        
         <footer class="mt-auto py-3 bg-dark blog-footer">
             <div class="container">
                 <p class="text-muted">Copyright Estelle Gaits - {{ "now"|date("Y") }}</p>

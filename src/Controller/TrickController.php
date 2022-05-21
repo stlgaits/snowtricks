@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/tricks')]
 class TrickController extends AbstractController
 {
+
     #[Route('/', name: 'app_trick_index', methods: ['GET'])]
     public function index(TrickRepository $trickRepository): Response
     {
@@ -36,6 +37,10 @@ class TrickController extends AbstractController
             $trick->setSlug($slug);
             $trick->setCreatedBy($this->getUser());
             $trickRepository->add($trick);
+            $this->addFlash(
+                'success',
+                'Trick succesfully added!'
+            );
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
