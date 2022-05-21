@@ -7,7 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
-#[UniqueEntity(fields: ['fileName, path'], message: 'There is already an image with this name.')]
+#[UniqueEntity(fields: ['fileName'], message: 'There is already an image with this name.')]
+#[UniqueEntity(fields: ['path'], message: 'There is already an image with this name.')]
 class Image
 {
     #[ORM\Id]
