@@ -3,21 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use Psr\Log\LoggerInterface;
-use App\Security\EmailVerifier;
 use App\Form\RegistrationFormType;
-use Symfony\Component\Mime\Address;
+use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
@@ -40,7 +39,6 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-
                 // encode the plain password
                 $user->setPassword(
                     $userPasswordHasher->hashPassword(
@@ -65,20 +63,21 @@ class RegistrationController extends AbstractController
                 $email->htmlTemplate('registration/confirmation_email.html.twig');
                 $signatureComponents = $this->emailVerifier->sendEmailConfirmation(
                     'app_verify_email',
-                    $user, 
+                    $user,
                     $email
                 );
-                
+
                 // $email->context(['signedUrl' => $signatureComponents->getSignedUrl()]);
-                
+
                 $this->mailer->send($email);
                 // do anything else you need here, like send an email
                 $this->addFlash(
                     'success',
                     'An email has been sent to your address! Welcome to the SnowTricks community.'
                 );
+
                 return $this->redirectToRoute('app_login');
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 $this->logger->error($e->getMessage().' '.$e->getFile().' '.$e->getLine());
                 $this->addFlash(
                     'warning',

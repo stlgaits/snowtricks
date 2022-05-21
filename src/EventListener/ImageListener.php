@@ -4,8 +4,8 @@ namespace App\EventListener;
 
 use App\Entity\Image;
 use App\Service\FileUploader;
-use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Symfony\Component\HttpFoundation\File\File;
 
 class ImageListener
 {
@@ -13,6 +13,7 @@ class ImageListener
     {
         $this->fileUploader = $fileUploader;
     }
+
     // the listener methods receive an argument which gives you access to
     // both the entity object of the event and the entity manager itself
     public function prePersist(LifecycleEventArgs $args): void

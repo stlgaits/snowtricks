@@ -5,18 +5,16 @@ namespace App\Form;
 use App\Entity\Image;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\File as Fichier;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class ImageType extends AbstractType
 {
-    
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
         $builder
             ->add('fileName', FileType::class, [
                 'label' => 'Image (.png or .jpg)',
@@ -39,7 +37,7 @@ class ImageType extends AbstractType
                     ]),
                 ],
             ]);
-            // $builder->get('fileName')
+        // $builder->get('fileName')
             // ->addModelTransformer(new CallbackTransformer(
             //     function ($fileNameAsArray) {
             //         // transform the array to a string
@@ -48,7 +46,7 @@ class ImageType extends AbstractType
             //         $path = "./assets/images/image_fixtures/";
             //         $tota =$path.$toto;
             //         return new Fichier($tota);
-            //     }, 
+            //     },
             //     // function ($fileNamesAsArray) {
             //     //     // transform the array to a string
             //     //     return implode(', ', $fileNamesAsArray);

@@ -42,7 +42,7 @@ class TrickType extends AbstractType
                 'by_reference' => false,
             ])
             ->add('save', SubmitType::class, [
-                'attr'=> ['class' => 'btn btn-dark']
+                'attr' => ['class' => 'btn btn-dark'],
                 ])
         ;
     }

@@ -16,7 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/tricks')]
 class TrickController extends AbstractController
 {
-
     #[Route('/', name: 'app_trick_index', methods: ['GET'])]
     public function index(TrickRepository $trickRepository): Response
     {
@@ -41,6 +40,7 @@ class TrickController extends AbstractController
                 'success',
                 'Trick succesfully added!'
             );
+
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -79,6 +79,7 @@ class TrickController extends AbstractController
                 'success',
                 'Trick succesfully edited!'
             );
+
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 

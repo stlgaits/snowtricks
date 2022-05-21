@@ -3,8 +3,8 @@
 namespace App\EventListener;
 
 use App\Entity\Video;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
 use App\Service\EmbedVideoLink\VideoLinkSorterService;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class VideoListener
 {
@@ -12,6 +12,7 @@ class VideoListener
     {
         $this->videoLinkTrimmer = $videoLinkTrimmer;
     }
+
     // the listener methods receive an argument which gives you access to
     // both the entity object of the event and the entity manager itself
     public function prePersist(LifecycleEventArgs $args): void
