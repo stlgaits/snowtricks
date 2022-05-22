@@ -1,19 +1,20 @@
 {% block title %}<h2 class="display-5 text-center my-5">{{ 'tricks' | trans }}</h2>{% endblock %}
 {% block body %}
-    <section id="tricks" class="container"   
+    <section id="tricks" class="container"  
+        {{ stimulus_controller('load-more-content', {
+            infoUrl: path('app_trick_index'),
+            max: 15
+        }) }} 
     >
         <div 
             class="row"
-            {{ stimulus_controller('load-more-content', {
-                max: 15,
-                infoUrl: path('app_trick_index')
-            }) }}
             data-load-more-content-target="tricks"
         >
             {% for index , trick in tricks %}
                 <div 
                     class="col-lg-4 mb-5"
                     data-load-more-content-target="trick"
+                    data-load-more-content-offset-value="{{loop.index}}"
                 >
                     <div class="card shadow">
                         {% if trick.images|length > 0 %}
@@ -42,21 +43,24 @@
                         </div>
                     </div>
                 </div>
+                {% if loop.index == 15 %}
+                    <div class="text-center mb-5">
+                        <button 
+                            role="button" 
+                            class="btn btn-outline-primary"
+                            data-action="load-more-content#onLoadMore"
+                        >
+                            {{ 'load_more' | trans | upper }}
+                        </button>
+                    </div>
+                {% endif %}
             {% else %}
                 <p class="text-center">{{ 'empty' | trans }}</p>
             {% endfor %}
         </div>
-        {% if tricks %}
-            <div class="text-center mb-5">
-                <button 
-                    role="button" 
-                    class="btn btn-outline-primary"
-                    data-action="load-more-content#onLoadMore"
-                >
-                    {{ 'load_more' | trans | upper }}
-                </button>
-            </div>
-        {% endif %}
+        {# {% if tricks %} #}
+            
+        {# {% endif %} #}
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <div class="text-center mb-5 d-grid col-4 mx-auto">
                 <a href="{{ path('app_trick_new') }}" role="button" class="btn btn-dark btn-lg shadow fw-bold">{{ 'create_new' | trans | upper }} {{'trick' | trans | upper }}</a>
