@@ -1,12 +1,13 @@
 {% block title %}<h2 class="display-5 text-center my-5">{{ 'tricks' | trans }}</h2>{% endblock %}
 {% block body %}
-    <section id="tricks" class="container"
-        {{ stimulus_controller('load-more-content', {
-            max: 15,
-        }) }}
+    <section id="tricks" class="container"   
     >
         <div 
             class="row"
+            {{ stimulus_controller('load-more-content', {
+                max: 15,
+                infoUrl: path('app_trick_index')
+            }) }}
             data-load-more-content-target="tricks"
         >
             {% for index , trick in tricks %}
@@ -49,7 +50,7 @@
             <div class="text-center mb-5">
                 <button 
                     role="button" 
-                    class="btn btn-outline-warning"
+                    class="btn btn-outline-primary"
                     data-action="load-more-content#onLoadMore"
                 >
                     {{ 'load_more' | trans | upper }}
