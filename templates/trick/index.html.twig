@@ -14,7 +14,6 @@
                 <div 
                     class="col-lg-4 mb-5"
                     data-load-more-content-target="trick"
-                    data-load-more-content-offset-value="{{loop.index}}"
                 >
                     <div class="card shadow">
                         {% if trick.images|length > 0 %}
@@ -49,6 +48,10 @@
                             role="button" 
                             class="btn btn-outline-primary"
                             data-action="load-more-content#onLoadMore"
+                            {{ stimulus_controller('offset' , {
+                                offset: next
+                            })}}
+                            {# data-action="offset:load->load-more-content#onLoadMore" #}
                         >
                             {{ 'load_more' | trans | upper }}
                         </button>
@@ -57,6 +60,12 @@
             {% else %}
                 <p class="text-center">{{ 'empty' | trans }}</p>
             {% endfor %}
+            {% if next < tricks|length %}
+                {{ dump(next )}}
+                {# {{ dump(next )}} #}
+                {# <a role="button"  class="btn btn-dark" href="{{ path('app_trick_index', { offset: next }) }}"><i class="bi bi-arrow-right"></i></a> #}
+            {% endif %}
+            
         </div>
         {# {% if tricks %} #}
             

@@ -1,6 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import axios from 'axios';
 
+
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
     static targets = ['trick', 'tricks'];
@@ -8,8 +9,12 @@ export default class extends Controller {
         max: Number,
         infoUrl: String,
         offset: 0,
-        page: 1
+        page: 1,
     }
+
+    // TODO: set a condition which says that if we've reached the maximum number
+    // of tricks, THEN DO NOT DISPLAY THE SAME FRAME TWICE !!!!!
+    // TODO: 2 => hide the 'add trick' buttons (when logged in) from the frame
 
     connect()
     {
@@ -18,9 +23,12 @@ export default class extends Controller {
         });
     }
 
-    onLoadMore(event)
+    async onLoadMore(event)
     {
-        this.loadAnimation(event);
+        await this.loadAnimation(event)
+            .then(() => {
+                this.removeLoadingButton(event);
+        });
         try {
             if(this.offsetValue >= this.maxValue) {
                 this.pageValue++;
@@ -32,6 +40,8 @@ export default class extends Controller {
                     })
                 .then((response) => {
                     this.tricksTarget.innerHTML += response.data;
+                    this.removeFrameTitle();
+                    this.appendLoadingButton(event);
                 });
             }
         } catch(e) {
@@ -46,10 +56,37 @@ export default class extends Controller {
             button.innerText = '...';
             await setTimeout(function(){
                 button.innerText = buttonText;
-            }, 500)
+            }, 1000)
         } catch(e) {
             console.log(e.responseText)
         }
+    }
+
+    async removeLoadingButton(event)
+    {
+        const button = event.currentTarget;
+        await button.remove();
+    }
+
+    appendLoadingButton(event)
+    {
+        const  button = event.currentTarget;
+        this.tricksTarget.innerHTML += button.innerHTML;
+    }
+
+    async removeFrameTitle()
+    {
+        const frameTitles = document.getElementsByTagName('h2');
+        const frameTitlesToRemove = [];
+        for(let i = 0; i < frameTitles.length ; i++)
+        {
+            if(i>0) {
+                frameTitlesToRemove[i] =  frameTitles[i];
+            }
+        }
+        frameTitlesToRemove.forEach((h2Element) => {
+            h2Element.remove();
+        })
     }
 
 }
