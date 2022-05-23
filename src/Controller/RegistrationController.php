@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -18,6 +19,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -59,24 +61,39 @@ class RegistrationController extends AbstractController
                 //     );
                 $email = new TemplatedEmail();
                 $email->from('estelle@gaits.com');
+                $email->subject('Confirmation de votre inscription');
                 $email->to($user->getEmail());
                 $email->htmlTemplate('registration/confirmation_email.html.twig');
                 $signatureComponents = $this->emailVerifier->sendEmailConfirmation(
                     'app_verify_email',
                     $user,
-                    $email
-                );
+                    $email,
+                    [
+                    'id' => $user->getId(),
+                    'email' => $user->getEmail()
+                    ]
+                ); 
 
                 // $email->context(['signedUrl' => $signatureComponents->getSignedUrl()]);
-
-                $this->mailer->send($email);
-                // do anything else you need here, like send an email
-                $this->addFlash(
-                    'success',
-                    'An email has been sent to your address! Welcome to the SnowTricks community.'
-                );
-
-                return $this->redirectToRoute('app_login');
+                try {
+                    $emailResponse =  $this->mailer->send($email);
+                    // do anything else you need here, like send an email
+                    $this->addFlash(
+                        'success',
+                        'An email has been sent to your address! Welcome to the SnowTricks community.'
+                    );
+                    // dump($email);
+                    // dump($emailResponse);
+                    return $this->redirectToRoute('app_register');
+                } catch (TransportExceptionInterface $e) {
+                    // some error prevented the email sending; display an
+                    // error message or try to resend the message
+                    $this->addFlash(
+                        'warning',
+                        $e->getMessage()
+                    );
+                    $this->logger->error($e->getMessage().' '.$e->getFile().' '.$e->getLine());
+                }
             } catch (Exception $e) {
                 $this->logger->error($e->getMessage().' '.$e->getFile().' '.$e->getLine());
                 $this->addFlash(
@@ -92,24 +109,29 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
+    public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // validate email confirmation link, sets User::isVerified=true and persists
         try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+            $userId = $request->query->get('id');
+            $user = $userRepository->find($userId);
+            if (!$user) {
+                throw $this->createNotFoundException();
+            }
+            $this->emailVerifier->handleEmailConfirmation($request, $user);
             $this->logger->info('Email verif');
         } catch (VerifyEmailExceptionInterface $exception) {
-            $this->logger->error('Email verif error : '.$exception->getMessage().''.$exception->getFile().''.$exception->getLine());
+            $this->logger->error('Email verif error : '.$exception->getMessage().' '.$exception->getFile().' '.$exception->getLine());
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-
+            dump($exception);
             return $this->redirectToRoute('app_register');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('app_login');
     }
 }
