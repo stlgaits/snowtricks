@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <section class="container vh-65 text-center my-3">
+        <div class="text-start">
+            <a href="{{ path('app_trick_show', {'slug' : trick.slug}) }}" role="button" class="btn btn-dark mt-3"><i class="bi bi-arrow-left"></i></a>
+        </div>
         <div class="row justify-content-center mt-5">
             <div class="col-md-6 my-5">
-                <h1 class="display-3 mb-5">Add new Image</h1>
+                <h1 class="display-3 mb-5">{{ 'add_image' | trans }}</h1>
                 {{ include('image/_form.html.twig') }}
-                <a href="{{ path('app_image_index_per_trick', {'trick' : trick.id}) }}" role="button" class="btn btn-light mt-3">back to trick</a>
             </div>
         </div>
     </section>

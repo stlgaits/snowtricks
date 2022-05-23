@@ -36,6 +36,7 @@ email_verification:
   link_expires: Ce lien expirera dans
   cheers: Merci!
 leave_comment: Laisser un commentaire
+edit_comment: Modifier le commentaire
 no_comment: Aucun commentaire pour le moment
 comments: Commentaires
 category: Catégorie
@@ -43,3 +44,7 @@ no_category: Pas de groupe
 load_more: Charger plus
 profile_page: Mon profil
 back_to_top: Revenir en haut de page
+confirm_delete: Êtes-vous sûr(e) de vouloir supprimer cette figure?
+add_video: Ajouter une vidéo
+add_image: Ajouter une image
+trick_added_success: Trick succesfully added!

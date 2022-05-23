@@ -14,7 +14,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[UniqueEntity(fields: ['email', 'username'], message: 'There is already an account with these credentials')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account associated to this email address, please login.')]
+#[UniqueEntity(fields: ['username'], message: 'This username is already taken')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
 {
     #[ORM\Id]

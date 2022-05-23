@@ -27,7 +27,7 @@ class CommentController extends AbstractController
     public function new(Request $request, CommentRepository $commentRepository, Trick $trick): Response
     {
         $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment, ['action' => $this->generateUrl('app_comment_new', [ 'trick' => $trick->getId()])]);
+        $form = $this->createForm(CommentType::class, $comment, ['action' => $this->generateUrl('app_comment_new', ['trick' => $trick->getId()])]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $now = new DateTimeImmutable();
@@ -35,6 +35,10 @@ class CommentController extends AbstractController
             $comment->setCreatedAt($now);
             $comment->setAuthor($this->getUser());
             $commentRepository->add($comment);
+            $this->addFlash(
+                'success',
+                'Your comment has been sent!'
+            );
 
             return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
@@ -63,6 +67,10 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentRepository->add($comment);
+            $this->addFlash(
+                'success',
+                'Your comment has been succesfully edited!'
+            );
 
             return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -80,6 +88,10 @@ class CommentController extends AbstractController
         $trick = $comment->getTrick();
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment);
+            $this->addFlash(
+                'success',
+                'Your comment has been succesfully removed!'
+            );
         }
 
         return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);

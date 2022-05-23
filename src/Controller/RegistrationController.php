@@ -6,11 +6,13 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,10 +23,11 @@ class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
 
-    public function __construct(EmailVerifier $emailVerifier, LoggerInterface $logger)
+    public function __construct(EmailVerifier $emailVerifier, LoggerInterface $logger, MailerInterface $mailer)
     {
         $this->emailVerifier = $emailVerifier;
         $this->logger = $logger;
+        $this->mailer = $mailer;
     }
 
     #[Route('/register', name: 'app_register')]
@@ -35,32 +38,56 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-            $userPasswordHasher->hashPassword(
+            try {
+                // encode the plain password
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
-                )
-            );
-            // TODO: implement flash message when username already exists, to avoid exception thrown in webprofiler
-            $entityManager->persist($user);
-            $entityManager->flush();
+                    )
+                );
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('mailer@estellegaits.com', 'SnowTricks'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
-            // do anything else you need here, like send an email
+                // generate a signed url and email it to the user
+                // $signatureComponents = $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                //         (new TemplatedEmail())
+                //             ->from(new Address('estelle.gaits@gmail.com', 'SnowTricks'))
+                //             ->to($user->getEmail())
+                //             ->subject('Please Confirm your Email')
+                //             ->htmlTemplate('registration/confirmation_email.html.twig')
+                //     );
+                $email = new TemplatedEmail();
+                $email->from('estelle@gaits.com');
+                $email->to($user->getEmail());
+                $email->htmlTemplate('registration/confirmation_email.html.twig');
+                $signatureComponents = $this->emailVerifier->sendEmailConfirmation(
+                    'app_verify_email',
+                    $user,
+                    $email
+                );
 
-            return $this->redirectToRoute('app_login');
+                // $email->context(['signedUrl' => $signatureComponents->getSignedUrl()]);
+
+                $this->mailer->send($email);
+                // do anything else you need here, like send an email
+                $this->addFlash(
+                    'success',
+                    'An email has been sent to your address! Welcome to the SnowTricks community.'
+                );
+
+                return $this->redirectToRoute('app_login');
+            } catch (Exception $e) {
+                $this->logger->error($e->getMessage().' '.$e->getFile().' '.$e->getLine());
+                $this->addFlash(
+                    'warning',
+                    $e->getMessage()
+                );
+            }
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+        return $this->renderForm('registration/register.html.twig', [
+            'registrationForm' => $form,
         ]);
     }
 
