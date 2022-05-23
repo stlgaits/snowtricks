@@ -1,17 +1,15 @@
 {% block title %}<h2 class="display-5 text-center my-5">{{ 'tricks' | trans }}</h2>{% endblock %}
 {% block body %}
-    <section id="tricks" class="container"
+    <section id="tricks" class="container"  
         {{ stimulus_controller('load-more-content', {
-            max: 15,
-        }) }}
+            infoUrl: path('app_trick_index'),
+            max: 15
+        }) }} 
     >
         <div 
             class="row"
             data-load-more-content-target="tricks"
         >
-            {% if tricks|length > 15 %}
-                {{ tricks|length }}
-            {% endif %}
             {% for index , trick in tricks %}
                 <div 
                     class="col-lg-4 mb-5"
@@ -26,15 +24,15 @@
                         <div class="card-body">
                             <div class="row text-center justify-content-around">
                                 <div class="col">
-                                    <a href="{{ path('app_trick_show', {'slug': trick.slug}) }}" class="card-link text-decoration-none display-6 fw-bold flex">{{ trick.name }}</a>
+                                    <a href="{{ path('app_trick_show', {'slug': trick.slug}) }}" class="card-link text-dark text-decoration-none fs-3 text-uppercase marker-100 flex">{{ trick.name }}</a>
                                 </div>
                                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                                     <div class="col">
-                                        <div class="row justify-content-end align-items-baseline">
-                                            <div class="col">
-                                                <a href="{{ path('app_trick_edit', {'slug': trick.slug}) }}" class="card-link text-decoration-none btn btn-light btn-block" role="button"><i class="bi bi-pencil-fill"></i></a>
+                                        <div class="row justify-content-center align-items-baseline">
+                                            <div class="col text-end">
+                                                <a href="{{ path('app_trick_edit', {'slug': trick.slug}) }}" class="card-link text-decoration-none btn btn-dark" role="button"><i class="bi bi-pencil-fill"></i></a>
                                             </div>
-                                            <div class="col">
+                                            <div class="col text-start">
                                                 {{ include('trick/_delete_form.html.twig') }}
                                             </div>
                                         </div>
@@ -44,24 +42,37 @@
                         </div>
                     </div>
                 </div>
+                {% if loop.index == 15 %}
+                    <div class="text-center mb-5">
+                        <button 
+                            role="button" 
+                            class="btn btn-outline-primary"
+                            data-action="load-more-content#onLoadMore"
+                            {{ stimulus_controller('offset' , {
+                                offset: next
+                            })}}
+                            {# data-action="offset:load->load-more-content#onLoadMore" #}
+                        >
+                            {{ 'load_more' | trans | upper }}
+                        </button>
+                    </div>
+                {% endif %}
             {% else %}
                 <p class="text-center">{{ 'empty' | trans }}</p>
             {% endfor %}
+            {% if next < tricks|length %}
+                {{ dump(next )}}
+                {# {{ dump(next )}} #}
+                {# <a role="button"  class="btn btn-dark" href="{{ path('app_trick_index', { offset: next }) }}"><i class="bi bi-arrow-right"></i></a> #}
+            {% endif %}
+            
         </div>
-        {% if tricks %}
-            <div class="text-center mb-5">
-                <button 
-                    role="button" 
-                    class="btn btn-outline-warning"
-                    data-action="load-more-content#onLoadMore"
-                >
-                    {{ 'load_more' | trans }}
-                </button>
-            </div>
-        {% endif %}
+        {# {% if tricks %} #}
+            
+        {# {% endif %} #}
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <div class="text-center mb-5">
-                <a href="{{ path('app_trick_new') }}" role="button" class="btn btn-primary">{{ 'create_new' | trans }}</a>
+            <div class="text-center mb-5 d-grid col-4 mx-auto">
+                <a href="{{ path('app_trick_new') }}" role="button" class="btn btn-dark btn-lg shadow fw-bold">{{ 'create_new' | trans | upper }} {{'trick' | trans | upper }}</a>
             </div>
         {% endif %}
         <div class="row position-fixed bottom-0 end-0 pe-2 pb-2 mt-2">

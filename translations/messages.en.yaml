@@ -36,8 +36,15 @@ email_verification:
   link_expires: This link will expire in
   cheers: Cheers!
 leave_comment: Leave a comment
+edit_comment: Edit comment
 comments: Comments
 no_comment: No comments on this trick yet
 category: Category
 no_category: Uncategorised
 load_more: Load more
+profile_page: My profile
+back_to_top: Back to top
+confirm_delete: Are you sure you want to delete this item?
+add_video: Add video
+add_image: Add image
+trick_added_success: Figure ajoutée avec succès!

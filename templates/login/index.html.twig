@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container-fluid vh-75">
+    <section class="container-fluid background-layout-fixed vh-85">
         <div class="row">
-            <div class="col-lg-6 mx-auto mt-5 text-center">
-                <h1 class="display-6 mb-5">{{'login' | trans }}</h1>
+            <div class="col-md-auto mx-auto mt-5 text-center">
+                <h1 class="display-6 my-5 text-white">{{'login' | trans }}</h1>
                 {% if error %}
                     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
                 <form action="{{ path('app_login') }}" method="post" class="card">
-                    <div class="card-body">
+                    <div class="card-body p-5">
                         <div class="mb-2">
-                            <label for="username" class="mb-2">{{ 'username' | trans }}:</label>
+                            <label for="username" class="mb-2">{{ 'username' | trans }}</label>
                             <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"/>
                         </div>
                         <div class="mb-2">
-                            <label for="password" class="mb-2">{{ 'password' | trans }}:</label>
+                            <label for="password" class="mb-2">{{ 'password' | trans }}</label>
                             <input class="form-control" type="password" id="password" name="_password"/>
                         </div>
                         <div class="mb-2">
@@ -23,10 +23,10 @@
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                         {# If you want to control the URL the user is redirected to on success #}
                         <input type="hidden" name="_target_path" value="{{ path('app_home') }}"/> 
-                        <button class="btn btn-primary mt-2" type="submit">{{ 'login' | trans }}</button>
+                        <button class="btn btn-dark mt-2" type="submit">{{ 'login' | trans }}</button>
                     </div>
                 </form>
             </div>
         </div>
-    </div>
+    </section>
 {% endblock %}

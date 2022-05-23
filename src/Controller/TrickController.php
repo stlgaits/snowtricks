@@ -6,6 +6,7 @@ use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
+use App\Repository\VideoRepository;
 use App\Service\SluggerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,16 +16,21 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/tricks')]
 class TrickController extends AbstractController
 {
-    #[Route('/', name: 'app_trick_index', methods: ['GET'])]
-    public function index(TrickRepository $trickRepository): Response
+    #[Route('/{page<\d+>?1}', name: 'app_trick_index', methods: ['GET'])]
+    public function index(TrickRepository $trickRepository, Request $request): Response
     {
+        $offset = max(0, $request->query->getInt('offset', 0));
+        $paginator = $trickRepository->getTrickPaginator($offset);
+
         return $this->render('trick/index.html.twig', [
-            'tricks' => $trickRepository->findAll(),
+            'tricks' => $paginator,
+            'previous' => $offset - TrickRepository::PAGINATOR_PER_PAGE,
+            'next' => min(count($paginator), $offset + TrickRepository::PAGINATOR_PER_PAGE),
         ]);
     }
 
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, TrickRepository $trickRepository, SluggerService $sluggerService): Response
+    public function new(Request $request, TrickRepository $trickRepository, SluggerService $sluggerService, VideoRepository $videoRepository): Response
     {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
@@ -35,6 +41,10 @@ class TrickController extends AbstractController
             $trick->setSlug($slug);
             $trick->setCreatedBy($this->getUser());
             $trickRepository->add($trick);
+            $this->addFlash(
+                'success',
+                'Trick succesfully added!'
+            );
 
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
@@ -64,13 +74,16 @@ class TrickController extends AbstractController
     #[Route('/{slug}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Trick $trick, TrickRepository $trickRepository): Response
     {
-        // dd($trick);
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $trick->setUpdatedAt(new \DateTimeImmutable('now'));
             $trickRepository->add($trick);
+            $this->addFlash(
+                'success',
+                'Trick succesfully edited!'
+            );
 
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
@@ -86,6 +99,10 @@ class TrickController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
             $trickRepository->remove($trick);
+            $this->addFlash(
+                'success',
+                'Trick succesfully removed!'
+            );
         }
 
         return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);

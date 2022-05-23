@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-	<section class="container-fluid background-layout">
+	<section class="container-fluid background-layout-stairs">
 		<div class="row justify-content-center">
 			<div class="col-md-8 pt-5">
 				<div class="card shadow-lg rounded my-5">
@@ -49,8 +49,8 @@
 								</h3>
 								<div class="blog-post">
 									<h2 class="blog-post-title">{{ trick.name }}</h2>
-									<p class="blog-post-meta">{{ trick.updatedAt ? trick.updatedAt|date('d/m/Y H:i:s') : '' }} {{'by' | trans }}
-										<a href="#">Mark</a>
+									<p class="blog-post-meta">{{ trick.updatedAt ? trick.updatedAt|date('d/m/Y H:i') : '' }} {{'by' | trans }}
+										<span class="fw-bold">{{ trick.createdBy }}</span>
 									</p>
 									<p>{{ trick.description }}</p>
 									{% for key, category in categories %}
@@ -64,8 +64,9 @@
 					</main>
 					<section id="comments" class="mb-5 container">
 						<div class="card bg-light shadow-sm">
-							<div class="card-body">
+							<div class="card-body p-5">
 								{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+									<h2>{{ 'comments' | trans }}</h2>
 									{{ render(path('app_comment_new', {'trick' : trick.id})) }}
 								{% else %}
 									<div class="text-center mt-4">
@@ -76,16 +77,19 @@
 								{% endif %}
 								{% for comment in comments %}
 									<div class="d-flex">
-										<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-										<div class="ms-3">
-											<div class="fw-bold">
-												<p>{{comment.author}}</p>
-												<span>{{ comment.createdAt ? comment.createdAt|date('d/m/Y H:i:s') : '' }}</span>
+										<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="faker profile picture" /></div>
+										<div class="ms-3 mb-3">
+											<div class="blog-post-meta">
+												<span class="fw-bold">
+												{{comment.author}}
+												</span>
+												-
+												<span>{{ comment.createdAt ? comment.createdAt|date('d/m/Y H:i') : '' }}</span>
 											</div>
 											{{comment.message}}
 											{% if comment.author == app.user %}
 											<div class="d-flex justify-content-start my-2">
-												<a class="btn btn-dark me-2" role="button" href="{{ path('app_comment_edit', {'id': comment.id}) }}">Edit</a>
+												<a class="btn btn-dark me-2" role="button" href="{{ path('app_comment_edit', {'id': comment.id}) }}">{{ 'edit' | trans}}</a>
 												{{ include('comment/_delete_form.html.twig') }}
 											</div>
 											{% endif %}

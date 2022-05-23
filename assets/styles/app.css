@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
 body {
   background-color: lightgray;
 }
@@ -8,7 +10,7 @@ body {
 }
 
 .blog-header-logo {
-  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-family: 'Permanent Marker', cursive;
   font-size: 2.25rem;
 }
 
@@ -22,7 +24,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-family: 'Permanent Marker', cursive;
 }
 
 .display-4 {
@@ -140,12 +142,25 @@ h6 {
     font-size: 3rem;
   }
 
-  .background-layout {
+  .background-layout-stairs {
     background: 
                 linear-gradient(white, white),
                 url('../images/background_stairs.jpg')
                 no-repeat
                 ;
+    background-attachment: fixed;
+    background-position: center;
+    background-blend-mode: saturation;
+  }
+
+  .background-layout-fixed {
+    background: 
+                linear-gradient(white, white),
+                url('../images/background.jpg')
+                ;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
     background-blend-mode: saturation;
   }
 }
