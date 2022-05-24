@@ -51,40 +51,30 @@ class RegistrationController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                // generate a signed url and email it to the user
-                // $signatureComponents = $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                //         (new TemplatedEmail())
-                //             ->from(new Address('estelle.gaits@gmail.com', 'SnowTricks'))
-                //             ->to($user->getEmail())
-                //             ->subject('Please Confirm your Email')
-                //             ->htmlTemplate('registration/confirmation_email.html.twig')
-                //     );
-                $email = new TemplatedEmail();
-                $email->from('estelle@gaits.com');
-                $email->subject('Confirmation de votre inscription');
-                $email->to($user->getEmail());
-                $email->htmlTemplate('registration/confirmation_email.html.twig');
-                $signatureComponents = $this->emailVerifier->sendEmailConfirmation(
-                    'app_verify_email',
-                    $user,
-                    $email,
-                    [
-                    'id' => $user->getId(),
-                    'email' => $user->getEmail()
-                    ]
-                ); 
-
                 // $email->context(['signedUrl' => $signatureComponents->getSignedUrl()]);
                 try {
-                    $emailResponse =  $this->mailer->send($email);
+                      // generate a signed url and email it to the user
+                        $email = new TemplatedEmail();
+                        $email->from('estelle@gaits.com');
+                        $email->subject('Confirmation de votre inscription');
+                        $email->to($user->getEmail());
+                        $email->htmlTemplate('registration/confirmation_email.html.twig');
+                        $this->emailVerifier->sendEmailConfirmation(
+                            'app_verify_email',
+                            $user,
+                            $email,
+                            [
+                            'id' => $user->getId(),
+                            'email' => $user->getEmail()
+                            ]
+                        ); 
+                    // $emailResponse =  $this->mailer->send($email);
                     // do anything else you need here, like send an email
                     $this->addFlash(
                         'success',
-                        'An email has been sent to your address! Welcome to the SnowTricks community.'
+                        'An email has been sent to your address! Please validate your account from there.'
                     );
-                    // dump($email);
-                    // dump($emailResponse);
-                    return $this->redirectToRoute('app_register');
+                    // return $this->redirectToRoute('app_register');
                 } catch (TransportExceptionInterface $e) {
                     // some error prevented the email sending; display an
                     // error message or try to resend the message
@@ -122,16 +112,20 @@ class RegistrationController extends AbstractController
             }
             $this->emailVerifier->handleEmailConfirmation($request, $user);
             $this->logger->info('Email verif');
+            $this->addFlash('success', 'Your email address has been verified.');
+            return $this->redirectToRoute('successful_verification');
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->logger->error('Email verif error : '.$exception->getMessage().' '.$exception->getFile().' '.$exception->getLine());
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-            dump($exception);
             return $this->redirectToRoute('app_register');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
-
         return $this->redirectToRoute('app_login');
+    }
+
+    #[Route('/verify/email/success', name: 'successful_verification')]
+    public function succesfulVerification(TranslatorInterface $translator)
+    {
+        return $this->render('registration/successful_verification.html.twig');
     }
 }
