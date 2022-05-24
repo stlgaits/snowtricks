@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'successful_registration' | trans }}{% endblock %}
+
+{% block body %}
+    <section class="container-fluid background-layout-fixed vh-85">
+        <div class="card p-5 mt-5">
+            <div class="">
+                <div class="lead">
+                    {{ 'succesfully_registered' | trans }}
+                </div>
+                <div class="text-center">
+                    <a href="{{ path('app_login')}}" role="button" class="btn btn-dark">{{ 'login' | trans }}</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

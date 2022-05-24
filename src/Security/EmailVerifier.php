@@ -54,16 +54,11 @@ class EmailVerifier
      */
     public function handleEmailConfirmation(Request $request, UserInterface $user): void
     {
-        try {
-            $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
-            
-            $user->setIsVerified(true);
+        $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
+        
+        $user->setIsVerified(true);
 
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
-        } catch (Exception $e) {
-            $this->logger->error($e->getMessage()." ".$e->getFile()." ".$e->getLine());
-            dd($e);
-        }
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
     }
 }
