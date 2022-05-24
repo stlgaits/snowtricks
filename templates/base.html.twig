@@ -43,7 +43,7 @@
         {% endblock %}
         {% block notifications %}
             <div {{ stimulus_controller('toast') }}>
-                {% for label, messages in app.flashes(['success', 'warning']) %}
+                {% for label, messages in app.flashes(['success', 'warning', 'verify_email_error']) %}
                     {% for message in messages %}
                         <div class="position-fixed bottom-0 end-0 p-3 flash-{{ label }}" style="z-index: 99">
                             <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true" data-toast-target="toast">
