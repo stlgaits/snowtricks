@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor Utilisateur
+
+Utilisateur -> Système: page inscription
+Système --> Utilisateur: formulaire d'inscription
+Utilisateur -> Système: inscription(username, email, password)
+
+alt identifiants utilisateur existants
+    Système -> Système: Email ou username déjà inscrit?
+    activate Système
+    Système --> Utilisateur: Identifiants déjà utilisés
+    Système --> Utilisateur: formulaire d'inscription
+    deactivate Système
+else Nouveaux identifiants utilisateur
+    Système -> Système: Email ou username déjà inscrit?
+    activate Système
+    Système -> Système: Ajouter identifiants utilisateur (username, email, password)
+    deactivate Système
+    Système --> Utilisateur: Identifiants enregistrés avec succès
+    Système -> Utilisateur: Email de vérification(lien avec token)
+    Utilisateur -> Système: Clic lien d'activation(token)
+    activate Système
+    Système -> Système: Utilisateur vérifié(token): isVerified
+    deactivate Système
+    Système --> Utilisateur: Page compte activé
+end
+
+@enduml
