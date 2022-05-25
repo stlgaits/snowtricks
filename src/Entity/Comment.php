@@ -31,7 +31,7 @@ class Comment implements \Stringable
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'comments')]
