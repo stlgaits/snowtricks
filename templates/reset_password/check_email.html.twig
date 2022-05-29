@@ -3,9 +3,17 @@
 {% block title %}{{ 'password_reset_email_sent' | trans }}{% endblock %}
 
 {% block body %}
-    <p>
-        {{ 'check_email_link' | trans }}
-        {{ 'link_expires' | trans }} {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-    </p>
-    <p>{{ 'check_spam_folder' | trans }} <a href="{{ path('app_forgot_password_request') }}">{{ 'try_again' | trans }}</a>.</p>
+    <section class="container-fluid background-layout-fixed vh-85">
+        <div class="row">
+            <div class="col-md-auto mx-auto mt-5 text-center">
+                <div class="card shadow p-5">
+                    <p>
+                        {{ 'check_email_link' | trans }}
+                        {{ 'link_expires' | trans }} {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+                    </p>
+                    <p>{{ 'check_spam_folder' | trans }} <a href="{{ path('app_forgot_password_request') }}">{{ 'try_again' | trans }}</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

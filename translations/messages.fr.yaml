@@ -1,5 +1,7 @@
 app_name: SnowTricks
 welcome: Bienvenue
+cheers: Cheers!
+hi: Bonjour!
 home: Accueil
 trick : Figure
 tricks : Figures
@@ -59,3 +61,4 @@ check_email_link: Si l'adresse email saisie est juste, un email vous a été env
 link_expires: Ce lien expirera dans 
 check_spam_folder: Si vous ne recevez pas d'email, veuillez vérifier votre dossier pourriels (spams) ou
 try_again: essayer à nouveau
+reset_password_link: Pour mettre à jour votre mot de passe, veuillez cliquer sur ce lien 

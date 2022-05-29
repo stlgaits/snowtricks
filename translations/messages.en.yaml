@@ -1,5 +1,7 @@
 app_name: SnowTricks
 welcome: Welcome
+cheers: Merci!
+hi: Hi!
 home: Home
 trick : Trick
 tricks : Tricks
@@ -59,3 +61,4 @@ check_email_link: If an account matching your email exists, then an email was ju
 link_expires: This link will expire in 
 check_spam_folder: If you don't receive an email please check your spam folder or
 try_again: try again
+reset_password_link: To reset your password, please visit the following link
