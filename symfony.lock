@@ -314,7 +314,7 @@
         "version": "v6.0.3"
     },
     "symfony/doctrine-messenger": {
-        "version": "v6.0.3"
+        "version": "v6.0.8"
     },
     "symfony/dom-crawler": {
         "version": "v6.0.3"
@@ -431,7 +431,7 @@
             "ref": "2523f7d31488903e247a522e760dc279be7f7aaf"
         },
         "files": [
-            "config/packages/messenger.yaml"
+            "./config/packages/messenger.yaml"
         ]
     },
     "symfony/mime": {
