@@ -52,7 +52,7 @@ class FileUploader
 
     public function loadFromOtherDir(File $file)
     {
-        $originalFilename = pathinfo($file, PATHINFO_FILENAME);
+        $originalFilename = pathinfo($file->getFileName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
         $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
