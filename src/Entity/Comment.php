@@ -10,6 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment implements \Stringable
 {
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable('now');
+        $this->updatedAt = new \DateTimeImmutable('now');
+    }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -24,6 +30,9 @@ class Comment implements \Stringable
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
@@ -70,6 +79,18 @@ class Comment implements \Stringable
         return $this;
     }
 
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
     public function getTrick(): ?Trick
     {
         return $this->trick;
@@ -85,5 +106,11 @@ class Comment implements \Stringable
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
     }
 }

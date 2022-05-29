@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor Utilisateur
+
+Utilisateur -> Système: page de connexion
+Système --> Utilisateur: formulaire de connexion
+Utilisateur -> Système: login(username, password)
+Système -> Système: Combinaison email & mot de passe correspondent à un compte?
+alt identifiants non-reconnus
+    activate Système
+    Système --> Utilisateur: Identifiants invalides - rééssayer
+    Système --> Utilisateur: formulaire de connexion  
+    deactivate Système
+else identifiants valides
+    Système -> Système: compte utilisateur vérifié?
+    alt compte non-vérifié
+    Système --> Utilisateur: Compte non-activé - consulter email d'activation
+    else compte vérifié 
+    Système -> Système: Démarrage session utilisateur
+    Système --> Utilisateur: Redirection vers page d'accueil
+    end
+end
+
+@enduml
