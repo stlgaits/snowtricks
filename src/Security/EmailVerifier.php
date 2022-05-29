@@ -2,15 +2,14 @@
 
 namespace App\Security;
 
-use Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 class EmailVerifier
 {
@@ -35,7 +34,7 @@ class EmailVerifier
             $user->getUserIdentifier(),
             [
                 'id' => $user->getId(),
-                'email' => $user->getEmail()
+                'email' => $user->getEmail(),
             ]
         );
 
@@ -55,7 +54,7 @@ class EmailVerifier
     public function handleEmailConfirmation(Request $request, UserInterface $user): void
     {
         $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
-        
+
         $user->setIsVerified(true);
 
         $this->entityManager->persist($user);

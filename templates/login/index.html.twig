@@ -18,7 +18,7 @@
                             <input class="form-control" type="password" id="password" name="_password"/>
                         </div>
                         <div class="mb-2">
-                            <a href="">{{ 'forgot_password' | trans }}?</a>
+                            <a href="{{ path('app_forgot_password_request') }}">{{ 'forgot_password' | trans }}?</a>
                         </div>
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                         {# If you want to control the URL the user is redirected to on success #}
