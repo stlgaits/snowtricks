@@ -62,6 +62,7 @@ class FileUploader
             $this->logger->error($e->getMessage().' '.$e->getFile().' line : '.$e->getLine());
             throw new FileException('Failed to load file : '.$e->getMessage().' on '.$e->getFile().' line : '.$e->getLine());
         }
+
         return $fileName;
     }
 }
