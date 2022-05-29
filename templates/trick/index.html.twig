@@ -51,7 +51,6 @@
                             {{ stimulus_controller('offset' , {
                                 offset: next
                             })}}
-                            {# data-action="offset:load->load-more-content#onLoadMore" #}
                         >
                             {{ 'load_more' | trans | upper }}
                         </button>
@@ -61,15 +60,10 @@
                 <p class="text-center">{{ 'empty' | trans }}</p>
             {% endfor %}
             {% if next < tricks|length %}
-                {{ dump(next )}}
-                {# {{ dump(next )}} #}
                 {# <a role="button"  class="btn btn-dark" href="{{ path('app_trick_index', { offset: next }) }}"><i class="bi bi-arrow-right"></i></a> #}
             {% endif %}
             
         </div>
-        {# {% if tricks %} #}
-            
-        {# {% endif %} #}
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <div class="text-center mb-5 d-grid col-4 mx-auto">
                 <a href="{{ path('app_trick_new') }}" role="button" class="btn btn-dark btn-lg shadow fw-bold">{{ 'create_new' | trans | upper }} {{'trick' | trans | upper }}</a>

@@ -14,7 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -50,8 +49,6 @@ class RegistrationController extends AbstractController
                 );
                 $entityManager->persist($user);
                 $entityManager->flush();
-
-                // $email->context(['signedUrl' => $signatureComponents->getSignedUrl()]);
                 try {
                       // generate a signed url and email it to the user
                         $email = new TemplatedEmail();
@@ -68,13 +65,11 @@ class RegistrationController extends AbstractController
                             'email' => $user->getEmail()
                             ]
                         ); 
-                    // $emailResponse =  $this->mailer->send($email);
                     // do anything else you need here, like send an email
                     $this->addFlash(
                         'success',
                         'An email has been sent to your address! Please validate your account from there.'
                     );
-                    // return $this->redirectToRoute('app_register');
                 } catch (TransportExceptionInterface $e) {
                     // some error prevented the email sending; display an
                     // error message or try to resend the message
@@ -101,9 +96,7 @@ class RegistrationController extends AbstractController
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
     {
-        // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        // validate email confirmation link, sets User::isVerified=true and persists
+        // validate email confirmation link, sets User::isVerified=true and persist
         try {
             $userId = $request->query->get('id');
             $user = $userRepository->find($userId);
