@@ -31,9 +31,11 @@ class CommentController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $now = new DateTimeImmutable();
-            $comment->setTrick($trick);
-            $comment->setCreatedAt($now);
-            $comment->setAuthor($this->getUser());
+            $comment->setTrick($trick)
+                    ->setCreatedAt($now)
+                    ->setAuthor($this->getUser())
+                    ->setUpdatedAt($now)
+                    ;
             $commentRepository->add($comment);
             $this->addFlash(
                 'success',
@@ -66,6 +68,9 @@ class CommentController extends AbstractController
         $trick = $comment->getTrick();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $comment
+                ->setUpdatedAt(new \DateTimeImmutable('now'))
+                ;
             $commentRepository->add($comment);
             $this->addFlash(
                 'success',
