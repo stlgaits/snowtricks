@@ -3,22 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\ChangePasswordFormType;
-use App\Form\ResetPasswordRequestFormType;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Form\ChangePasswordFormType;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Form\ResetPasswordRequestFormType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
-use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 #[Route('/reset-password')]
 class ResetPasswordController extends AbstractController
@@ -27,11 +28,13 @@ class ResetPasswordController extends AbstractController
 
     private ResetPasswordHelperInterface $resetPasswordHelper;
     private EntityManagerInterface $entityManager;
+    private LoggerInterface $logger;
 
-    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper, EntityManagerInterface $entityManager)
+    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper, EntityManagerInterface $entityManager, LoggerInterface $logger)
     {
         $this->resetPasswordHelper = $resetPasswordHelper;
         $this->entityManager = $entityManager;
+        $this->logger = $logger;
     }
 
     /**
@@ -51,8 +54,8 @@ class ResetPasswordController extends AbstractController
             );
         }
 
-        return $this->render('reset_password/request.html.twig', [
-            'requestForm' => $form->createView(),
+        return $this->renderForm('reset_password/request.html.twig', [
+            'requestForm' => $form,
         ]);
     }
 
@@ -145,7 +148,9 @@ class ResetPasswordController extends AbstractController
 
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
+            $this->logger->info('Reset Password Request Processed');
         } catch (ResetPasswordExceptionInterface $e) {
+            $this->logger->error('Reset Password Request Error : '.$e->getMessage());
             // If you want to tell the user why a reset email was not sent, uncomment
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
