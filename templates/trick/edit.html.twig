@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Trick{% endblock %}
+{% block title %}{{ 'edit' | trans }} {{ 'trick' | trans }}{% endblock %}
 
 {% block body %}
     <section class="container-fluid">
@@ -17,7 +17,7 @@
                             {{ include('trick/_delete_form.html.twig') }}
                         </div>
                     </div>
-                    <h1 class="card-title">Modifier Trick</h1>
+                    <h1 class="card-title">{{ 'edit' | trans }} {{ 'trick' | trans }}</h1>
                     <div class="card-body">
                         {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
                     </div>
