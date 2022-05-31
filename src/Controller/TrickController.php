@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Trick;
 use App\Form\TrickType;
+use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
 use App\Repository\VideoRepository;
@@ -30,7 +31,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, TrickRepository $trickRepository, SluggerService $sluggerService, VideoRepository $videoRepository): Response
+    public function new(Request $request, TrickRepository $trickRepository): Response
     {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);

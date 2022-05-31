@@ -3,12 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Trick;
+use App\Entity\Category;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class TrickType extends AbstractType
 {
@@ -34,12 +37,28 @@ class TrickType extends AbstractType
                 'entry_options' => ['label' => false],
                 'by_reference' => false,
             ])
-            ->add('categories', CollectionType::class, [
-                'entry_type' => CategoryType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'entry_options' => ['label' => false],
-                'by_reference' => false,
+            // ->add('categories', CollectionType::class, [
+            //     'entry_type' => CategoryType::class,
+            //     'allow_add' => true,
+            //     'allow_delete' => true,
+            //     'entry_options' => ['label' => false],
+            //     'by_reference' => false,
+            // ])
+            ->add('categories', EntityType::class, [
+                'class' => Category::class,
+                // 'entry_type' => CategoryType::class,
+                // 'required' => false,
+                // 'label' => 'Trick Group',
+                'multiple' => true,
+                'choice_label' => 'name',
+                // // 'block_name' => 'Category',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
+                // 'choice_value' => function (?Category $entity) {
+                //     return $entity ? $entity->getId() : '';
+                // },
             ])
             ->add('save', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-dark'],

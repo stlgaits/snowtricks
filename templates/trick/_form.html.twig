@@ -15,12 +15,15 @@
     data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}"
     >
     </ul>
-    <button type="button" class=" btn btn-dark add_item_link" data-collection-holder-class="categories">{{ 'add_category' | trans }}</button>
-    <ul class="categories" 
+    {# {{ form_row(form.name) }}
+    {{ form_row(form.description) }} #}
+       {# {{ form_widget(form) }} #}
+    {# <button type="button" class=" btn btn-dark add_item_link" data-collection-holder-class="categories">{{ 'add_category' | trans }}</button> #}
+    {# <ul class="categories" 
         data-index="{{ form.categories|length > 0 ? form.categories|last.vars.name + 1 : 0 }}"
     data-prototype="{{ form_widget(form.categories.vars.prototype)|e('html_attr') }}"
     >
-    </ul>
+    </ul> #}
     {# <div 
     data-controller="video"
     > #}
