@@ -49,6 +49,7 @@ back_to_top: Revenir en haut de page
 confirm_delete: Êtes-vous sûr(e) de vouloir supprimer cette figure?
 add_video: Ajouter une vidéo
 add_image: Ajouter une image
+add_category: Ajouter une catégorie
 trick_added_success: La nouvelle figure a été ajoutée avec succès!
 successful_registration: Inscription validée
 succesfully_registered: Félicitations ! Votre compte SnowTricks a été activé avec succès.

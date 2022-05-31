@@ -37,8 +37,6 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $slug = $sluggerService->slugify($trick->getName());
-            $trick->setSlug($slug);
             $trick->setCreatedBy($this->getUser());
             $trickRepository->add($trick);
             $this->addFlash(
@@ -72,7 +70,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{slug}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository): Response
+    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerService $sluggerService): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
