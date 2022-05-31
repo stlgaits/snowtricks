@@ -6,7 +6,6 @@ use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
-use App\Repository\VideoRepository;
 use App\Service\SluggerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,15 +29,13 @@ class TrickController extends AbstractController
     }
 
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, TrickRepository $trickRepository, SluggerService $sluggerService, VideoRepository $videoRepository): Response
+    public function new(Request $request, TrickRepository $trickRepository): Response
     {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $slug = $sluggerService->slugify($trick->getName());
-            $trick->setSlug($slug);
             $trick->setCreatedBy($this->getUser());
             $trickRepository->add($trick);
             $this->addFlash(
@@ -60,11 +57,11 @@ class TrickController extends AbstractController
     {
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $commentRepository->getCommentPaginator($trick, $offset);
-        $categories = $trick->getCategories();
+        $category = $trick->getCategory();
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
-            'categories' => $categories,
+            'category' => $category,
             'comments' => $paginator,
             'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
             'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
@@ -72,7 +69,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{slug}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository): Response
+    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerService $sluggerService): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);

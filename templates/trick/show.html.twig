@@ -53,11 +53,11 @@
 										<span class="fw-bold">{{ trick.createdBy }}</span>
 									</p>
 									<p>{{ trick.description }}</p>
-									{% for key, category in categories %}
+									{% if category %}
 										<span class="badge bg-info rounded-pill">{{category.name}}</span>
 									{% else %}
 										<span class="badge bg-light text-dark rounded-pill ">{{ 'no_category' | trans }}</span>
-									{% endfor %}
+									{% endif %}
 								</div>
 							</div>
 						</div>

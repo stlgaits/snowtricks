@@ -1,6 +1,6 @@
 app_name: SnowTricks
 welcome: Welcome
-cheers: Merci!
+cheers: Cheers!
 hi: Hi!
 home: Home
 trick : Trick
@@ -49,6 +49,7 @@ back_to_top: Back to top
 confirm_delete: Are you sure you want to delete this item?
 add_video: Add video
 add_image: Add image
+add_category: Add category
 trick_added_success: Trick successfully added!
 successful_registration: Successful registration
 succesfully_registered: Congrats ! You've succesfully activated your SnowTricks account.
