@@ -4,10 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Trick;
 use App\Form\TrickType;
-use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
-use App\Repository\VideoRepository;
 use App\Service\SluggerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
