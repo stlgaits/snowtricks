@@ -4,10 +4,10 @@
         <div class="row">
             <div class="col-md-auto mx-auto mt-5 text-center">
                 <h1 class="display-6 my-5 text-white">{{'login' | trans }}</h1>
-                {% if error %}
-                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif %}
                 <form action="{{ path('app_login') }}" method="post" class="card">
+                    {% if error %}
+                        <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
                     <div class="card-body p-5">
                         <div class="mb-2">
                             <label for="username" class="mb-2">{{ 'username' | trans }}</label>

@@ -47,3 +47,17 @@ services:
                 event: 'prePersist'
                 priority: 500
                 connection: 'default'
+    App\EventListener\TrickListener:
+        tags:
+            -
+                name: 'doctrine.event_listener'
+                event: 'prePersist'
+                priority: 500
+                connection: 'default'
+    App\EventListener\CategoryListener:
+        tags:
+            -
+                name: 'doctrine.event_listener'
+                event: 'prePersist'
+                priority: 500
+                connection: 'default'

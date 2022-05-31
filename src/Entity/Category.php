@@ -20,11 +20,11 @@ class Category implements \Stringable
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\ManyToMany(targetEntity: Trick::class, inversedBy: 'categories')]
-    private $tricks;
-
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
+
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Trick::class)]
+    private $tricks;
 
     public function __construct()
     {
@@ -48,30 +48,6 @@ class Category implements \Stringable
         return $this;
     }
 
-    /**
-     * @return Collection<int, Trick>
-     */
-    public function getTricks(): Collection
-    {
-        return $this->tricks;
-    }
-
-    public function addTrick(Trick $trick): self
-    {
-        if (!$this->tricks->contains($trick)) {
-            $this->tricks[] = $trick;
-        }
-
-        return $this;
-    }
-
-    public function removeTrick(Trick $trick): self
-    {
-        $this->tricks->removeElement($trick);
-
-        return $this;
-    }
-
     public function __toString(): string
     {
         return $this->name;
@@ -85,6 +61,36 @@ class Category implements \Stringable
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Trick>
+     */
+    public function getTricks(): Collection
+    {
+        return $this->tricks;
+    }
+
+    public function addTrick(Trick $trick): self
+    {
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks[] = $trick;
+            $trick->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrick(Trick $trick): self
+    {
+        if ($this->tricks->removeElement($trick)) {
+            // set the owning side to null (unless already changed)
+            if ($trick->getCategory() === $this) {
+                $trick->setCategory(null);
+            }
+        }
 
         return $this;
     }
