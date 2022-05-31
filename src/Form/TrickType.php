@@ -44,12 +44,12 @@ class TrickType extends AbstractType
             //     'entry_options' => ['label' => false],
             //     'by_reference' => false,
             // ])
-            ->add('categories', EntityType::class, [
+            ->add('category', EntityType::class, [
                 'class' => Category::class,
                 // 'entry_type' => CategoryType::class,
                 // 'required' => false,
                 // 'label' => 'Trick Group',
-                'multiple' => true,
+                // 'multiple' => true,
                 'choice_label' => 'name',
                 // // 'block_name' => 'Category',
                 'query_builder' => function (EntityRepository $er) {
