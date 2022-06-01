@@ -40,6 +40,7 @@ export default class extends Controller {
                         this.tricksTarget.innerHTML += response.data;
                         this.removeFrameTitle();
                         this.appendLoadingButton(event);
+                        this.removeAddTrickButton();
                     });
             }
         } catch (e) {
@@ -67,10 +68,12 @@ export default class extends Controller {
 
     appendLoadingButton(event) {
         const button = event.currentTarget;
-        this.tricksTarget.innerHTML += button.innerHTML;
+        if (button !== null) {
+            this.tricksTarget.innerHTML += button.innerHTML;
+        }
     }
 
-    async removeFrameTitle() {
+    removeFrameTitle() {
         const frameTitles = document.getElementsByTagName('h2');
         const frameTitlesToRemove = [];
         for (let i = 0; i < frameTitles.length; i++) {
@@ -80,6 +83,19 @@ export default class extends Controller {
         }
         frameTitlesToRemove.forEach((h2Element) => {
             h2Element.remove();
+        })
+    }
+
+    removeAddTrickButton() {
+        const addTrickButtons = document.querySelectorAll('.add-trick');
+        const addTrickButtonsToRemove = [];
+        for (let i = 0; i < addTrickButtons.length; i++) {
+            if (i > 0) {
+                addTrickButtonsToRemove[i] = addTrickButtons[i];
+            }
+        }
+        addTrickButtonsToRemove.forEach((btn) => {
+            btn.remove();
         })
     }
 

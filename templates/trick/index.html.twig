@@ -65,7 +65,7 @@
             
         </div>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <div class="text-center mb-5 d-grid col-4 mx-auto">
+            <div class="text-center mb-5 d-grid col-4 mx-auto add-trick">
                 <a href="{{ path('app_trick_new') }}" role="button" class="btn btn-dark btn-lg shadow fw-bold">{{ 'create_new' | trans | upper }} {{'trick' | trans | upper }}</a>
             </div>
         {% endif %}
