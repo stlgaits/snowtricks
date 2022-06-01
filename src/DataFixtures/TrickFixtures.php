@@ -45,7 +45,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
                 ->setSlug($this->slugger->slugify($trick->getName()))
                 ->setCreatedAt(new DateTimeImmutable('-1 day'))
                 ->setUpdatedAt(new DateTimeImmutable())
-                ->addCategory($category)
+                ->setCategory($category)
                 ->setCreatedBy($user);
             $manager->persist($trick);
         }
