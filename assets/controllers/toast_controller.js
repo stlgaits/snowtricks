@@ -8,12 +8,12 @@ export default class extends Controller {
 
     connect() {
         this.toastTargets.map(function (toastEl) {
-            return new bootstrap.Toast(toastEl)
-        })
+            return new bootstrap.Toast(toastEl);
+        });
 
-        this.toastTargets.forEach(toast =>
+        this.toastTargets.forEach((toast) =>
             this.showThenHideToast(toast)
-        )
+        );
     }
 
     showThenHideToast(toast) {
