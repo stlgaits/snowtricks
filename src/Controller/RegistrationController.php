@@ -32,7 +32,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -65,10 +65,9 @@ class RegistrationController extends AbstractController
                             'email' => $user->getEmail(),
                             ]
                         );
-                    // do anything else you need here, like send an email
                     $this->addFlash(
                         'success',
-                        'An email has been sent to your address! Please validate your account from there.'
+                        $translator->trans('email_verification.validate_account_email')
                     );
                 } catch (TransportExceptionInterface $e) {
                     // some error prevented the email sending; display an
@@ -105,7 +104,7 @@ class RegistrationController extends AbstractController
             }
             $this->emailVerifier->handleEmailConfirmation($request, $user);
             $this->logger->info('Email verif');
-            $this->addFlash('success', 'Your email address has been verified.');
+            $this->addFlash('success', $translator->trans('email_verification.email_verified'));
 
             return $this->redirectToRoute('successful_verification');
         } catch (VerifyEmailExceptionInterface $exception) {
