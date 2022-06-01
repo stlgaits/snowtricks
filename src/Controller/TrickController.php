@@ -6,7 +6,6 @@ use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
-use App\Service\SluggerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,7 +68,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{slug}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, SluggerService $sluggerService): Response
+    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
