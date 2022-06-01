@@ -1,8 +1,6 @@
 {% block body %}
     <aside class="text-center mt-2" data-controller="video">
         <div class="medias d-flex justify-content-center flex-wrap flex-xl-nowrap"
-            {# data-index="{{ images|length > 0 ? images|last.vars.name + 1 : 0 }}"
-            data-prototype="{{ form_widget(images.vars.prototype)|e('html_attr') }}" #}
         >
             {% for video in videos %}
                 <div>
@@ -25,7 +23,7 @@
             {% endfor %}
         </div>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <a href="{{ path('app_video_new', {'trick' : trick.id}) }}" role="button" class="btn btn-success my-5 add_item_link" data-collection-holder-class="videos">{{ 'create_new' | trans }} <i class="fa fa-youtube" aria-hidden="true"></i></a>
+            <a href="{{ path('app_video_new', {'trick' : trick.id}) }}" role="button" class="btn btn-success my-5 add_item_link" data-collection-holder-class="videos">{{ 'add_video' | trans }} <i class="fa fa-youtube" aria-hidden="true"></i></a>
         {% endif %}
     </aside>
 {% endblock %}

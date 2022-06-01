@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\Image;
-use App\Form\DataTransformer\FilenameToFileTransformer;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Form\DataTransformer\FilenameToFileTransformer;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ImageType extends AbstractType
 {
@@ -23,8 +25,7 @@ class ImageType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('fileName', FileType::class, [
+        $builder->add('fileName', FileType::class, [
                 'label' => 'Image (.png or .jpg)',
                 // make it optional so you don't have to re-upload the PDF file
                 // every time you edit the Product details
@@ -44,7 +45,26 @@ class ImageType extends AbstractType
             ]);
 
         $builder->get('fileName')
-                    ->addModelTransformer($this->transformer);
+                ->addModelTransformer($this->transformer);
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            [$this, 'onPostSetData']
+        );
+    
+    }
+
+    public function onPostSetData(FormEvent $event): void
+    {
+        $form = $event->getForm();
+        $data = $event->getData();
+        if ($data) {
+            if($data instanceof Image){
+                if($data->getFileName() === null){
+                    return;
+                }
+            }
+            $form->remove('fileName');
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
