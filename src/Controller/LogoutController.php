@@ -2,17 +2,18 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LogoutController extends AbstractController
 {
     #[Route('/logout', name: 'logout')]
-    public function logout()
+    public function logout(TranslatorInterface $translator)
     {
         $this->addFlash(
             'success',
-            'Successfully logged out.'
+            $translator->trans('logout')
         );
         throw new \Exception('logout() should never be reached');
     }

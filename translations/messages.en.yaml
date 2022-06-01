@@ -2,9 +2,13 @@ app_name: SnowTricks
 welcome: Welcome
 cheers: Cheers!
 hi: Hi!
+success: Success
 home: Home
 trick : Trick
 tricks : Tricks
+trick_added: Trick successfully added!
+trick_edited: Trick successfully edited!
+trick_removed: Trick successfully removed!
 login: Login
 must_login: Login to your account to be able to leave a comment
 logout: Logout
@@ -31,12 +35,19 @@ edit: Edit
 submit: Send
 username: Username
 email: Email
+email_sent: An email has been sent.
 email_verification:
+  validate_account_email: An email has been sent to your address! Please validate your account from there.
   hello: Hi! Please confirm your email!
   click_link: Please confirm your email address by clicking the following link 
   confirm_email: Confirm my Email
   link_expires: This link will expire in
   cheers: Cheers!
+  email_verified: Your email address has been verified.
+comment:
+  sent: Your comment has been sent!
+  edited: Your comment has been succesfully edited!
+  removed: Your comment has been succesfully removed!
 leave_comment: Leave a comment
 edit_comment: Edit comment
 comments: Comments
