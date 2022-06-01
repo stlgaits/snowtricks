@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Entity\Image;
+use App\Form\DataTransformer\FilenameToFileTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -11,19 +14,21 @@ use Symfony\Component\Validator\Constraints\File;
 
 class ImageType extends AbstractType
 {
+    private $transformer;
+
+    public function __construct(FilenameToFileTransformer $transformer)
+    {
+        $this->transformer = $transformer;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('fileName', FileType::class, [
                 'label' => 'Image (.png or .jpg)',
-                // unmapped means that this field is not associated to any entity property
-                // 'mapped' => false,
-                // 'multiple' => true,
                 // make it optional so you don't have to re-upload the PDF file
                 // every time you edit the Product details
                 'required' => false,
-                 // unmapped fields can't define their validation using annotations
-                // in the associated entity, so you can use the PHP constraint classes
                 'constraints' => [
                     new File([
                         'maxSize' => '2048k',
@@ -34,7 +39,12 @@ class ImageType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid PNG or JPG file',
                     ]),
                 ],
+                // validation message if the data transformer fails
+                'invalid_message' => 'That is not a valid filename',
             ]);
+
+        $builder->get('fileName')
+                    ->addModelTransformer($this->transformer);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
