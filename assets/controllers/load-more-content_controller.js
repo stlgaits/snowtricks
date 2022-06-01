@@ -83,7 +83,7 @@ export default class extends Controller {
         }
         frameTitlesToRemove.forEach((h2Element) => {
             h2Element.remove();
-        })
+        });
     }
 
     removeAddTrickButton() {
@@ -96,7 +96,7 @@ export default class extends Controller {
         }
         addTrickButtonsToRemove.forEach((btn) => {
             btn.remove();
-        })
+        });
     }
 
 }

@@ -50,9 +50,9 @@ h6 {
 }
 
 .nav-scroller .nav-link {
-  padding-top: .75rem;
-  padding-bottom: .75rem;
-  font-size: .875rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 0.875rem;
 }
 
 .card-img-right {
@@ -71,20 +71,18 @@ h6 {
 .jumbotron {
   background: url('../images/background.jpg');
   background-size: cover;
-
 }
 
 .background-layout {
   background: white;
 }
 
-
 /* Pagination */
 .blog-pagination {
   margin-bottom: 4rem;
 }
 
-.blog-pagination>.btn {
+.blog-pagination > .btn {
   border-radius: 2rem;
 }
 
@@ -96,7 +94,7 @@ h6 {
 }
 
 .blog-post-title {
-  margin-bottom: .25rem;
+  margin-bottom: 0.25rem;
   font-size: 2.5rem;
 }
 
@@ -113,7 +111,7 @@ h6 {
   color: #727272;
   text-align: center;
   background-color: #f9f9f9;
-  border-top: .05rem solid #e5e5e5;
+  border-top: 0.05rem solid #e5e5e5;
 }
 
 .blog-footer p:last-child {
@@ -132,32 +130,28 @@ h6 {
 
 /* Responsive media queries : larger screens */
 @media (min-width: 768px) {
+
   .bd-placeholder-img-lg {
     font-size: 3.5rem;
   }
+
   .h-md-250 {
     height: 250px;
   }
+
   .display-4 {
     font-size: 3rem;
   }
 
   .background-layout-stairs {
-    background: 
-                linear-gradient(white, white),
-                url('../images/background_stairs.jpg')
-                no-repeat
-                ;
+    background: linear-gradient(white, white), url('../images/background_stairs.jpg') no-repeat;
     background-attachment: fixed;
     background-position: center;
     background-blend-mode: saturation;
   }
 
   .background-layout-fixed {
-    background: 
-                linear-gradient(white, white),
-                url('../images/background.jpg')
-                ;
+    background: linear-gradient(white, white), url('../images/background.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
