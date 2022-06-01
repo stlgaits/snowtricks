@@ -2,8 +2,8 @@
     {{ form_row(form.name) }}
     {{ form_row(form.description) }}
     {{ form_row(form.category) }}
-    <div>
-        <button type="button" class="btn btn-dark add_item_link" data-collection-holder-class="videos">{{ 'add_video' | trans }}</button>
+    <div class="row">
+        <button type="button" class="btn btn-outline-danger add_item_link" data-collection-holder-class="videos"><i class="bi bi-play-btn-fill me-2"></i> {{ 'add_video' | trans }}</button>
         {# <button type="button" class="btn btn-danger remove_item_link" data-collection-holder-class="videos">{{ 'remove' | trans }}</button> #}
         <ul class="videos" 
             data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}"
@@ -11,8 +11,8 @@
         >
         </ul>
     </div>
-    <div>
-        <button type="button" class="btn btn-dark add_item_link" data-collection-holder-class="images">{{ 'add_image' | trans }}</button>
+    <div class="row">
+        <button type="button" class="btn btn-outline-dark add_item_link" data-collection-holder-class="images"><i class="bi bi-image me-2"></i> {{ 'add_image' | trans }}</button>
         {# <button type="button" class="btn btn-danger remove_item_link" data-collection-holder-class="images">{{ 'remove' | trans }}</button> #}
         <ul class="images" 
             data-index="{{ form.images|length > 0 ? form.images|last.vars.name + 1 : 0 }}"
