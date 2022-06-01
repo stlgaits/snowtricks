@@ -6,12 +6,13 @@ namespace App\Controller;
 
 use App\Entity\Trick;
 use App\Form\TrickType;
-use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/tricks')]
 class TrickController extends AbstractController
@@ -30,7 +31,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, TrickRepository $trickRepository): Response
+    public function new(Request $request, TrickRepository $trickRepository, TranslatorInterface $translator): Response
     {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
@@ -41,7 +42,7 @@ class TrickController extends AbstractController
             $trickRepository->add($trick);
             $this->addFlash(
                 'success',
-                'Trick succesfully added!'
+                $translator->trans('trick_added')
             );
 
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
@@ -70,7 +71,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{slug}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository): Response
+    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, TranslatorInterface $translator): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -80,7 +81,7 @@ class TrickController extends AbstractController
             $trickRepository->add($trick);
             $this->addFlash(
                 'success',
-                'Trick succesfully edited!'
+                $translator->trans('trick_added')
             );
 
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
@@ -93,13 +94,13 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'app_trick_delete', methods: ['POST'])]
-    public function delete(Request $request, Trick $trick, TrickRepository $trickRepository): Response
+    public function delete(Request $request, Trick $trick, TrickRepository $trickRepository, TranslatorInterface $translator): Response
     {
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
             $trickRepository->remove($trick);
             $this->addFlash(
                 'success',
-                'Trick succesfully removed!'
+                $translator->trans('trick_removed')
             );
         }
 

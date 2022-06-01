@@ -97,7 +97,7 @@ class ResetPasswordController extends AbstractController
 
         try {
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
-            $this->addFlash('success', 'Success.');
+            $this->addFlash('success', $translator->trans('success'));
         } catch (ResetPasswordExceptionInterface $e) {
             $this->addFlash('reset_password_error', sprintf(
                 '%s - %s',
@@ -150,7 +150,7 @@ class ResetPasswordController extends AbstractController
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
             $this->logger->info('Reset Password Request Processed');
-            $this->addFlash('success', 'An email has been sent.');
+            $this->addFlash('success', $translator->trans('email_sent'));
         } catch (ResetPasswordExceptionInterface $e) {
             $this->logger->error('Reset Password Request Error : '.$e->getReason());
             // If you want to tell the user why a reset email was not sent, uncomment
