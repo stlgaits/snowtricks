@@ -6,12 +6,12 @@
 
 ## Entity Relationship diagram
 
-![ERD](images/erd.png)
+![ERD](diagrams/erd.png)
 
 ## Use case diagrams
 
-![use case diagram](images/use_case.png)
+![use case diagram](diagrams/use_case.png)
 
 ## Sequence diagrams
 
-![registration sequence diagram](images/sequence_registration.png)
+![registration sequence diagram](diagrams/sequence_registration.png)
