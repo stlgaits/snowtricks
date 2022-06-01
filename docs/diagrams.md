@@ -4,8 +4,14 @@
 
 ## Class diagram
 
+## Entity Relationship diagram
+
+![ERD](images/erd.png)
+
 ## Use case diagrams
+
+![use case diagram](images/use_case.png)
 
 ## Sequence diagrams
 
-## Sitemap
+![registration sequence diagram](images/sequence_registration.png)

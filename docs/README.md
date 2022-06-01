@@ -29,7 +29,7 @@ This project was setup using [dunglas/symfony-docker](https://github.com/dunglas
 
 Open a shell inside the Node.js container and run the following commands to install & build web assets :
 
-```
+```bash
 yarn install
 yarn build
 ```
@@ -38,7 +38,7 @@ yarn build
 
 Open a shell inside the NPHP container and run the following commands to load the inital data set :
 
-```
+```bash
 php bin/console doctrine:fixtures:load --append
 ```
 
@@ -82,7 +82,7 @@ symfony check:requirements
 
 Before running the project, you need to run the following commands in order to install the appropriate dependencies.
 
-```
+```bash
 composer install
 ```
 
@@ -90,25 +90,25 @@ composer install
 
 Now let's create our database. This will use the DATABASE_URL you've provided in .env.local file.
 
-```
+```bash
 php bin/console doctrine:database:create
 ```
 
 #### Generating the database schema
 
-```
+```bash
  php bin/console doctrine:schema:update --force
  ```
 
-#### Loading the initial data (first 10 tricks)
+#### Loading the initial data (first 10 tricks & admin user)
 
-```
+```bash
 php bin/console doctrine:fixtures:load --append
 ```
 
 #### Install & build web assets
 
-```
+```bash
 yarn install
 yarn build
 ```

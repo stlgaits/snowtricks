@@ -10,4 +10,4 @@
 
 <!-- background image -->
 
-![](images/background_winter.jpg)
+![A man doing a snowboarding trick](images/background_winter.jpg)
