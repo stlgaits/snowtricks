@@ -77,7 +77,7 @@ class CommentController extends AbstractController
                 'Your comment has been succesfully edited!'
             );
 
-            return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('comment/edit.html.twig', [
