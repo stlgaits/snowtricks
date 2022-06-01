@@ -32,15 +32,17 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
         $parentDirs[0] = array_shift($imageFiles);
         $parentDirs[1] = array_shift($imageFiles);
         foreach ($imageFiles as $fileName) {
-            $file = new File($imagesFolder.'/'.$fileName);
-            if (is_file($file)) {
-                $uniqueFileName = $this->fileUploader->loadFromOtherDir($file);
-                $image = new Image();
-                $image->setFileName($uniqueFileName)
-                        ->setPath('/uploads/images/'.$image->getFileName())
-                        ->setTrick($faker->randomElement($tricks))
-                ;
-                $manager->persist($image);
+            if (file_exists($fileName)){
+                $file = new File($imagesFolder.'/'.$fileName);
+                if (is_file($file)) {
+                    $uniqueFileName = $this->fileUploader->loadFromOtherDir($file);
+                    $image = new Image();
+                    $image->setFileName($uniqueFileName)
+                            ->setPath('/uploads/images/'.$image->getFileName())
+                            ->setTrick($faker->randomElement($tricks))
+                    ;
+                    $manager->persist($image);
+                }
             }
         }
 
