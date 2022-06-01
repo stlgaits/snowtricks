@@ -25,12 +25,12 @@
     const addFormToCollection = (e) => {
         const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
         const item = document.createElement('li');
-        const deleteBtn = document.createElement('button');
+        /*  const deleteBtn = document.createElement('button');
         const deleteIcon =  document.createElement('i');
         deleteIcon.classList.add('bi', 'bi-x');
         deleteBtn.setAttribute('type' ,'button');
         deleteBtn.classList.add('btn' ,'btn-dark', 'remove_item_link');
-        deleteBtn.append(deleteIcon);
+        deleteBtn.append(deleteIcon); */
         item.innerHTML = collectionHolder
             .dataset
             .prototype
@@ -38,7 +38,7 @@
             /__name__/g,
             collectionHolder.dataset.index
             );
-        item.appendChild(deleteBtn);
+    // item.appendChild(deleteBtn); 
         collectionHolder.appendChild(item);
         collectionHolder.dataset.index++;
         item.classList.add('list-unstyled', 'd-flex', 'justify-content-between');
