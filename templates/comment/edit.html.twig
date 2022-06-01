@@ -2,18 +2,26 @@
 {% block title %}{{'edit_comment' | trans }}{% endblock %}
 
 {% block body %}
-    <div class="container-fluid vh-65 ">
-        <div class="row text-center justify-content-center mt-5">
-            <div class="col-md-10 ">
-                <h1 class="mb-5">{{'edit_comment' | trans }}</h1>
-                <div class="d-flex justify-content-between">
-                    <a role="button" class="btn btn-dark" href="{{ path('app_trick_show', {'slug' : trick.slug}) }}"><i class="bi bi-arrow-left"></i></a>
-                    {{ include('comment/_delete_form.html.twig') }}
-                </div>
-                <div class="my-5">
-                    {{ include('comment/_form.html.twig', {'button_label': 'Update'}) }}
+    <section class="vh-80 background-layout-fixed">
+        <div class="container pt-4">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow p-5">
+                        <div class="row text-center justify-content-center mt-5">
+                            <div class="">
+                                <h1 class="mb-5">{{'edit_comment' | trans }}</h1>
+                                <div class="d-flex justify-content-between">
+                                    <a role="button" class="btn btn-dark" href="{{ path('app_trick_show', {'slug' : trick.slug}) }}"><i class="bi bi-arrow-left"></i></a>
+                                    {{ include('comment/_delete_form.html.twig') }}
+                                </div>
+                                <div>
+                                    {{ include('comment/_form.html.twig', {'button_label': 'Update'}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 {% endblock %}
