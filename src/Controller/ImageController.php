@@ -46,10 +46,7 @@ class ImageController extends AbstractController
         $form = $this->createForm(ImageType::class, $image);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('fileName')->getData();
-            $image->setFileName($this->fileUploader->upload($imageFile));
             $image->setTrick($trick);
-            $image->setPath('/uploads/images/'.$image->getFileName());
             $imageRepository->add($image);
 
             return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
