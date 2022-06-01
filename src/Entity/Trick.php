@@ -50,7 +50,7 @@ class Trick implements \Stringable
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, orphanRemoval: true, cascade: ['persist'])]
     private $videos;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class, cascade: ['persist'], orphanRemoval:true)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class, cascade: ['persist'], orphanRemoval: true)]
     private $images;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
