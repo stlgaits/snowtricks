@@ -44,7 +44,7 @@ export default class extends Controller {
                     });
             }
         } catch (e) {
-            console.log(e.responseText)
+            console.log(e.responseText);
         }
     }
 
@@ -55,9 +55,9 @@ export default class extends Controller {
             button.innerText = '...';
             await setTimeout(function () {
                 button.innerText = buttonText;
-            }, 1000)
+            }, 1000);
         } catch (e) {
-            console.log(e.responseText)
+            console.log(e.responseText);
         }
     }
 
@@ -83,7 +83,7 @@ export default class extends Controller {
         }
         frameTitlesToRemove.forEach((h2Element) => {
             h2Element.remove();
-        })
+        });
     }
 
     removeAddTrickButton() {
@@ -96,7 +96,7 @@ export default class extends Controller {
         }
         addTrickButtonsToRemove.forEach((btn) => {
             btn.remove();
-        })
+        });
     }
 
 }
