@@ -20,7 +20,7 @@ export default class extends Controller {
         setTimeout(function () {
             toast.classList.remove('show');
             toast.classList.add('hide');
-        }, 3500)
+        }, 3500);
     }
 
 
