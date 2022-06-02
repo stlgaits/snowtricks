@@ -1,0 +1,91 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package SnowTricks {
+    entity User {
+        - id: int
+        - email: string
+        - username: string
+        - password: string
+        - roles: json
+        - isVerifed: bool
+        + getComments()
+        + addComment()
+        + removeComment()
+        + getUserIdentifier()
+        + __toString()
+    }
+
+    entity Trick {
+        - id: int
+        - name: string
+        - description: string
+        - createdAt: datetime
+        - updatedAt: datetime
+        - slug: string
+        + getCreatedBy()
+        + getCategory()
+        + getComments()
+        + addComment()
+        + removeComment()
+        + getVideos()
+        + addVideo()
+        + removeVideo()
+        + getImages()
+        + addImage()
+        + removeImage()
+        + _toString()
+    }
+
+    entity Video {
+        - id: int
+        - link: string
+        + getTrick()
+        + setTrick()
+    }
+
+    entity Category {
+        - id: int
+        - name: string
+        - slug: string
+        + getTricks()
+        + addTrick()
+        + removeTrick()
+        + _toString()
+    }
+    entity Image {
+        - id: int
+        - fileName: string
+        - path: string
+        + getTrick()
+        + setTrick()
+    }
+
+    entity Comment {
+        - id: int
+        - message: text
+        - description: string
+        - createdAt: datetime
+        - updatedAt: datetime
+        - slug: string
+        + getAuthor()
+        + __toString()
+        + setCreatedAtValue()
+    }
+
+    entity ResetPasswordRequest {
+        - id: int
+        + getUser()
+    }
+
+    User "0..*" -- "1" ResetPasswordRequest : > makes
+    User "0..*" -- "1" Comment : > writes
+    User "0..*" -- "1" Trick : > creates
+    Trick "0..*" -- "1" Image : > contains
+    Trick "1" -- "1..*" Category : > belongs
+    Trick "0..*" -- "1" Video : > contains
+    Trick "0..*" -- "1" Comment : > contains
+
+}
+
+@enduml

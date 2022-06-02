@@ -12,6 +12,8 @@
 
 ![use case diagram](diagrams/use_case.png)
 
+![use case puml diagram](diagrams/use_case_puml.png)
+
 ## Sequence diagrams
 
 ![registration sequence diagram](diagrams/sequence_registration.png)
