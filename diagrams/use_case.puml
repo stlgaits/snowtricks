@@ -1,0 +1,30 @@
+@startuml Use Case SnowTricks
+
+left to right direction
+skinparam packageStyle rectangle
+actor Visiteur
+actor Utilisateur
+rectangle SnowTricks {
+    Visiteur -- (Consulter un article)
+    Visiteur -- (Lire les commentaires)
+    rectangle Blog { 
+        Utilisateur -- (Consulter son profil)
+        (Modifier son mot de passe) .> (Consulter son profil) : extends
+        Utilisateur -- (Ajouter une figure)
+        Utilisateur -- (Supprimer une figure)
+        Utilisateur -- (Modifier une figure)
+        (Ajouter une/des images) .> (Modifier une figure) : extends
+        (Ajouter une/des vidéos) .> (Modifier une figure) : extends
+        (Supprimer une image) .> (Modifier une figure) : extends
+        (Supprimer une vidéo) .> (Modifier une figure) : extends
+        Utilisateur -- (Laisser un commentaire)
+        (Laisser un commentaire) .> (Modifier son commentaire) : extends
+        (Laisser un commentaire) .> (Supprimer son commentaire) : extends
+    }
+    rectangle Connexion {
+        (Blog) .> (Se connecter) : include
+        (Se connecter) .> (S'inscrire) : include
+        (S'inscrire) .> (Activer son compte par email) : include
+    }
+}
+@enduml

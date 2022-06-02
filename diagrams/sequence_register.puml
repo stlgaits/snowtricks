@@ -1,4 +1,4 @@
-@startuml
+@startuml Sequence Register
 'https://plantuml.com/sequence-diagram
 
 actor Utilisateur
