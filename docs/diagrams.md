@@ -4,6 +4,8 @@
 
 ## Class diagram
 
+![Class diagram](diagrams/class_puml.png)
+
 ## Entity Relationship diagram
 
 ![ERD](diagrams/erd.png)
@@ -17,3 +19,5 @@
 ## Sequence diagrams
 
 ![registration sequence diagram](diagrams/sequence_registration.png)
+
+![login sequence diagram](diagrams/sequence_login.png)
