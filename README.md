@@ -1,15 +1,15 @@
 # SnowTricks
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/30d28b33b7fd4fbb92d0a523cff172eb)](https://www.codacy.com/gh/EstelleMyddleware/snowtricks/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=EstelleMyddleware/snowtricks&amp;utm_campaign=Badge_Grade)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/EstelleMyddleware/snowtricks)](https://github.com/EstelleMyddleware/snowtricks)
-![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/EstelleMyddleware/snowtricks/bootstrap)
-![GitHub repo size](https://img.shields.io/github/repo-size/EstelleMyddleware/snowtricks)
-[![GitHub issues](https://img.shields.io/github/issues/EstelleMyddleware/snowtricks)](https://github.com/EstelleMyddleware/snowtricks/issues)
-[![GitHub closed issues](https://img.shields.io/github/issues-closed/EstelleMyddleware/snowtricks)](https://github.com/EstelleMyddleware/snowtricks/issues?q=is%3Aissue+is%3Aclosed)
-![GitHub last commit](https://img.shields.io/github/last-commit/EstelleMyddleware/snowtricks)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/stlgaits/snowtricks)](https://github.com/stlgaits/snowtricks)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/stlgaits/snowtricks/bootstrap)
+![GitHub repo size](https://img.shields.io/github/repo-size/stlgaits/snowtricks)
+[![GitHub issues](https://img.shields.io/github/issues/stlgaits/snowtricks)](https://github.com/stlgaits/snowtricks/issues)
+[![GitHub closed issues](https://img.shields.io/github/issues-closed/EstelleMyddleware/snowtricks)](https://github.com/stlgaits/snowtricks/issues?q=is%3Aissue+is%3Aclosed)
+![GitHub last commit](https://img.shields.io/github/last-commit/stlgaits/snowtricks)
 [![docsify](https://img.shields.io/badge/documented%20with-docsify-cc00ff.svg)](https://docsify.js.org/)
 
-Symfony blog project. Full documentation for the project is available [here](https://estellemyddleware.github.io/snowtricks/)
+Symfony blog project. Full documentation for the project is available [here](https://stlgaits.github.io/snowtricks/)
 
 ## Getting Started
 
