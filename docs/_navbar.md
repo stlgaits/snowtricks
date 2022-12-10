@@ -1,5 +1,6 @@
 * [Home](/)
 * [Demo](http://snowtricks.estellegaits.fr)
 * [PHP Vanilla blog](http://estellegaits.fr)
+* [ToDoList upgrade](http://todo.estellegaits.fr)
 * [Codacy Report](https://app.codacy.com/gh/EstelleMyddleware/snowtricks/dashboard)
 * [UML Diagrams](diagrams.md)
